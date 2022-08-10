@@ -1,3 +1,7 @@
+# Urban Analytics and City Science
+
+This is a very indicative list of lectures and practicals
+
 1. Why cities **L**. 
 
    - Urban Models from Bettencourt
