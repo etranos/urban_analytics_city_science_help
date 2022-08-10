@@ -1,0 +1,42 @@
+---
+title: "Not used"
+author: "Emmanouil Tranos"
+date: '2022-08-08'
+output: html_document
+---
+
+## Dashboards
+
+@kitchin2016praxis Dashboards provide a visual means to organize and interact with data, enabling users to drill down into data sets, filter out uninteresting data, select an item or group of data and retrieve details, view relationships among items, extract sub-collections, and to overlay and interconnect disparate data, enabling summary-to-detail exploration within a single visualisation system (Dubriwny and Rivards, 2004; Few, 2006). 
+
+Dashboards act as cognitive tools that improve the user's 'span of control' over a large repository of voluminous, varied and quickly transitioning data (Brath and Peters, 2004) and enable a user to explore the characteristics and structure of datasets and interprettrends without the need for specialist analytics skills (the systems are point and click and require no knowledge of how to produce such graphics). 
+
+They can also facilitate the exporting of visualizations for use in documents, or sharing via social media, or accessing the underlying data for importing into other analytical packages. With the recent drive towards producing open data, some of the data feeding urban control rooms and city dashboards, as well as wider administrative and statistical data, are becoming freely available for wider deployment. As such, other parties are able to use the data to conduct their own analyses, build city apps, and create their own urban dashboards. And in some cases, the city itself is publicly sharing data and visualizations via an open dashboard.
+
+First, dashboards, it is contended, are not simply neutral, technical, commonsensical tools, but rather are framed socially, political, ethically, philosophically in terms of their form, selection of data, modes of display and analysis, and deployment (Kitchin et al., 2015).
+
+Second, dashboards act as translators and engines rather than mirrors, deploying a communicative protocol that frames how data are visualised and thus what the user can see and engage with, and what questions can be asked and how the answers are displayed (Franceschini et al., 2007; Galloway, 2012; Mattern, 2014, 2015).
+
+Third, dashboards are reductive, atomizing complex, contingent relationships into relatively simple visualised measures that obscures the multidimensional nature of cities. They decontextualize a city from its history, its political economy, the wider set of social, economic and environmental relations, and its wider interconnections and interdependencies that stretches out over space and time
+
+[@bettencourt2021introduction]
+
+-   Concerning the spatial structure of cities, new data sources give us a real-time, high-resolution picture of mobility
+
+-   no monocentric cities
+
+[@kitchin2021fragmented]
+
+-   fractured urban data ecosystem @kitchin2021fragmented
+
+-   Examples of non fractured ecosystems
+
+    -   [LA](https://data.lacounty.gov/)
+
+    -   [NYC](https://opendata.cityofnewyork.us/overview/)
+
+    -   [London](https://data.london.gov.uk/)
+
+-   While each municipality could invest in a particular smart technology, it only becomes cost-effective and its utility and value realized when it is operated at scale. Each of the 101 municipalities in Metro Boston investing in its own intelligent transport system or city operating system or having its own bikeshare scheme that is not interoperable across the metro-region, for example, would make little sense. Metro-wide adoption, at a sufficient scale of economy, can only be achieved through collaborative procurement, which is difficult to realize in practice, particularly given the structural differences between the municipalities, many of which have a strong rural character despite being in the metro area.
+
+-   In the past, key infrastructures and services -- water, sewage, public transit, main roads -- were extracted from municipalities and placed into regional entities that spanned them (e.g., in the Metro Boston case, MBTA, MWRA). Such extraction would make sense with respect to many new digital, data-driven infrastructures and services. However, creating new regional agencies is politically challenging

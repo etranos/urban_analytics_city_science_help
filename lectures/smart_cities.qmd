@@ -1,0 +1,199 @@
+---
+title: "Smart cities, urban big data, digital twins and other buzz terms"
+author: |
+  | 
+  | Emmanouil Tranos
+  |
+  | University of Bristol, Alan Turing Institute 
+  | e.tranos@bristol.ac.uk, [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+
+format: revealjs
+editor: visual
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| results: false
+#| include: false
+
+library(rprojroot)
+
+# This is the project path
+path <- find_rstudio_root_file()
+images.path <- paste0(path, "/images/")
+```
+
+## Introduction
+
+-   Big data vs. just data
+
+-   Smart city
+
+-   Urban dashboards
+
+## Big data vs. just data
+
+-   Digital traces human activities leave behind
+
+-   Accidental [@arribas2014accidental]
+
+-   Why?
+
+-   Computing power together
+
+-   Digital turn
+
+-   Geospatial technologies \[*important for urban researchers*\]
+
+## Big data vs. just data
+
+::: r-fit-text
+-   **Volume** \[how big is big?\]
+
+-   **Velocity**, being created in or near real time
+
+-   **Variety**, being structured and unstructured in nature
+
+-   Exhaustive in scope, capture entire populations or systems
+
+-   Fine-grained in resolution
+
+-   Relational in nature, common fields that enable the merging of different data sets
+
+-   Flexible, extensionable (can add new fields easily) and scalable (can expand in size rapidly) [@kitchin2013big].
+
+Or, whatever doesn't fit in an excel spreadsheet (Batty, anecdotal)
+:::
+
+## Big data vs. just data
+
+-   Biases
+
+-   Need for new methods
+
+-   Accidental
+
+-   *Big data can speak for themselves*. Not really [@kitchin2013big]
+
+## Smart cities, different approaces
+
+The **digital technologies** approach
+
+-   Urban infrastructure and services are managed computationally
+
+-   Networked digital instrumentation embedded into the urban fabric
+
+-   Continuous streams of data that dynamically feed into management systems and control rooms
+
+-   New forms of governmentality
+
+::: footer
+Based on @kitchin2019timescape
+:::
+
+## Smart cities, different approaches
+
+The **outputs** approach
+
+-   Strategic use of information and communications technology (ICT)
+
+-   ➔ smarter citizens, workers, policy, and programs
+
+-   ➔ innovation, economic development, and entrepreneurship
+
+-   ➔ urban resilience and sustainability
+
+::: footer
+Based on @kitchin2019timescape
+:::
+
+## Smart cities, different approaches
+
+The **just** approach
+
+-   ICT-led, citizen-centric model of development
+
+-   ➔ social innovation and social justice, civic engagement and activism
+
+-   ➔ transparent and accountable governance
+
+::: footer
+Based on @kitchin2019timescape
+:::
+
+## Smart cities, different approaches
+
+In reality...
+
+... a blend of all these approached
+
+Rio de Janeiro, Brazil: The first *smart city*
+
+![](images/rio_smart.png)
+
+<small> Source: [Centro De Operacoes Prefeitura Do Rio](http://cor.rio/) </small>
+
+## Smart cities and data
+
+-   (Smart) cities generate much more data nowadays
+
+    -   e-government systems, city operating systems, centralized control rooms, digital surveillance, predictive policing, intelligent transport systems, smart grids, sensor networks, building management systems, civic apps ... [@kitchin2021fragmented]
+
+## Smart cities and data
+
+-   Local authorities are under pressure to release open data for:
+
+    -   public scrutiny
+
+    -   civic apps
+
+-   Data reuse:
+
+    -   internally facing
+
+    -   externally facing
+
+## Dashboards
+
+> A visual display of the most important information needed to achieve one or more objectives; a consolidated and arranged on a single screen so the information can be monitored at a glance [@few2007dashboard]
+
+## Dashboards
+
+-   Transparency, open government philosophy, accountability [@young2022building]
+
+-   Improve user's 'span of control of large and complex data
+
+-   Share outputs
+
+## Dashboards
+
+-   Not just neutral, technical tools
+
+-   Translators and engines rather than mirrors
+
+-   Reductive in nature (vs. the complex nature of cities)
+
+-   Decontextualize cities [@kitchin2016praxis]
+
+## London dashboard
+
+<iframe src="https://citydashboard.org/london/" width="850" height="500" frameBorder="0" scrolling="yes">
+
+</iframe>
+
+<small><small> Source: <https://citydashboard.org/london/> </small></small>
+
+## NYC Dashboard
+
+![](images/nyc_dashboard.png)
+
+<small><small> Source: <https://datausa.io/profile/geo/new-york-ny> </small></small>
+
+## Digital twins
+
+???
+
+???
+## References {.scrollable}

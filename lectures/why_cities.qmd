@@ -1,0 +1,394 @@
+---
+title: "Cities, a very very very brief introduction"
+author: author: |
+  | 
+  | Emmanouil Tranos
+  |
+  | University of Bristol, Alan Turing Institute 
+  | e.tranos@bristol.ac.uk, [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+format: 
+  revealjs
+editor: visual
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| results: false
+#| include: false
+
+library(rprojroot)
+
+# This is the project path
+path <- find_rstudio_root_file()
+images.path <- paste0(path, "/images/")
+```
+
+## Urban analytics and city science
+
+<small>
+
+1.  Why cities **L**.
+
+2.  Smart cities and big data **L**
+
+3.  Lecture on networks **L**
+
+4.  Network analysis practical 1
+
+5.  Network analysis practical 2
+
+6.  Network science, urban laws and scaling **L**
+
+7.  Networks small scale
+
+8.  Lecture on spatial interactions
+
+9.  Practical on spatial interaction modelling
+
+10. Urban policies and causality
+
+</small>
+
+## Urban analytics and city science
+
+Aims
+
+-   Readings, full reference list and expectations
+-   blah
+-   blah
+
+## Why should we care about cities?
+
+The most overused figure [@un_urban_rural]...
+
+> In 2009 for the first time in history 2009 more than 50% of the population lived within cities
+
+... but still true!
+
+Source of:
+
+-   economic growth,
+
+-   innovation - technology - ...,
+
+-   but also - pandemics (!)
+
+## Why should we care about cities?
+
+-   Strong links historically between [@mccann2011globalization]:
+    -   Globalisation
+    -   Urbanisation
+    -   Industrialisation
+
+## Why should we care about cities?
+
+::: columns
+::: {.column width="70%"}
+<iframe src="https://data.worldbank.org/share/widget?indicators=SP.URB.TOTL.IN.ZS&amp;view=map" width="675" height="450" frameBorder="0" scrolling="no">
+
+</iframe>
+:::
+
+::: {.column width="30%"}
+-   Tremendous growth
+-   Not the same everywhere
+:::
+:::
+
+## Urban analytics and city science
+
+-   Understand cities and how they change
+-   Use critically and effectively urban data
+-   Understand and master methodological tools
+-   Support urban policy making
+
+## Different terms
+
+-   Academics love inventing new terms
+-   Urban science, city science, urban analytics, urban geography, geographic data science, urban data science, complexity science, TheNextBigThing
+-   Have a look: @urbananalytics
+
+## Why do cities exist?"
+
+-   An economist's answer: to *economise*!
+-   Because of economies of scale and agglomeration economies
+
+## Scale economies
+
+-   AKA *increasing returns to scale*, or
+-   AKA *economies of scale*
+-   Business enterprises become more efﬁcient at large scales of operation
+-   More output per unit of input than at smaller scales
+-   ➔ larger enterprises
+-   Within firms
+
+## Scale economies
+
+![](images/scale_economies.png){width="50%"}
+
+## Scale economies
+
+Increasing returns to scale
+
+::: incremental
+-   double ALL the inputs ➔
+-   more than double output
+:::
+
+## Scale economies
+
+![](images/scale_economies.png){width="50%"}
+
+## Scale economies
+
+Constant returns to scale:
+
+::: incremental
+-   double ALL the inputs ➔
+-   double output
+:::
+
+## Scale economies
+
+![](images/scale_economies.png){width="50%"}
+
+## Scale economies
+
+Decreasing returns to scale
+
+::: incremental
+-   double ALL the inputs ➔
+-   less than double output
+:::
+
+## Scale economies
+
+![](images/scale_economies.png){width="50%"}
+
+## Scale economies
+
+How do they affect space?
+
+::: incremental
+-   Clustering of workers near factories
+-   Clustering of services for workers near factories
+-   The *company town* example
+-   Illustrative
+:::
+
+## Agglomeration economies
+
+-   AKA External economies of scale
+-   External to the firm
+-   **Very important for cities**
+-   Two types:
+    -   Localisation economies AKA Marshallian externalities
+    -   Urbanisation economies AKA Jacobian externalities
+
+## Localization Economies
+
+-   Within a group of firms of the same industry
+-   clustered together at the same place
+-   Why?
+    -   Information exchange
+    -   Labour mobility
+    -   Specialist services
+
+Examples: Silicon Valley (micro-electronics), The City of London (finance), Detroit and Michigan (automobile), Seattle (aerospace), etc.
+
+## Localization Economies
+
+![](images/nesta_clusters.png)
+
+## Urbanization economies
+
+-   Firms across different sectors
+-   Clustered together at the same place [@lifedeathcities]
+-   A city
+-   Why?
+    -   Support services to firms experiencing internal and localization economies
+    -   Clustering
+    -   Increased local factor prices
+    -   Economies of scale
+
+## Agglomeration economies
+
+-   Diversity vs. specialization
+-   Internal economies of scale (firm specific)
+-   Localization economies (industry specific)
+-   Urbanization economies (city specific)
+
+## The sources of agglomeration
+
+1.  Knowledge spillovers [@marshall1890principles]
+
+-   Interactions between employees of different firms
+-   Proximity
+-   Tacit knowledge
+-   Mutual trading of information
+
+## The sources of agglomeration economies
+
+2.  Non-traded local inputs
+
+-   Efficient provision of specialist inputs
+-   Infrastructure
+
+## The sources of agglomeration economies
+
+3.  Local skilled labour pool
+
+-   Sufficient quantity of labour to respond to market changes
+-   Specialised labour / cost of training
+
+## The sources of agglomeration economies
+
+-   Processes of learning, sharing and matching [@duranton2004]
+-   Clustering:
+    -   Interaction
+    -   Dynamic
+    -   ➔ reduces knowledge and information transaction cost
+-   Higher profitability for firms within the cluster than those outside the cluster
+
+## Agglomeration economies: pecuniary vs. technological
+
+-   Pecuniary ➔ input cost reduction
+-   *make inputs cheaper in larger cities*
+-   Technological ➔ raise productivity
+-   *make inputs more productive in larger cities*
+
+::: footer
+Based on @brueckner2011lectures
+:::
+
+## Agglomeration economies: a citique
+
+Bounded rationality [@simon1955behavioral; @simon1966theories]
+
+-   Information about space and location in limited
+-   Relocation issues, the ability of a rational decision is limited
+-   Relocation cost
+
+## Why cities do exist?
+
+To *economise*!
+
+In other words, collocation of people and firms increases efficiency.
+
+## Cities as complex system {.scrollable}
+
+::: r-fit-text
+|                    |                                                                                                                        |
+|------------------|------------------------------------------------------|
+| Heterogeneity      | Differences in information, profession, culture, race, ethnicity, and economic status                                  |
+| Interconnectivity  | Interdependence between people, organizations, and infrastructure in networks                                          |
+| Scaling            | Self-similar economies of scale per capita in material infrastructure and increasing returns to socioeconomic activity |
+| Circular causality | Interdependence dynamics between socioeconomic activities, institutions, and services                                  |
+| Evolution          | Open-ended change supported by new information, investment, and collective action                                      |
+
+<small> Source: @bettencourt2021introduction </small>
+:::
+
+## Cities as complex system: scale
+
+```{r}
+library(DiagrammeR)
+mermaid("
+graph TB
+A[Individual] --> B[Neighbourhood]
+B --> C[City]
+C --> D[Urban systems]
+")
+```
+
+## Urban models: looking into cities
+
+The Burgess model
+
+![](images/burgess.png)
+
+<small> Source: [bbc.co.uk](https://www.bbc.co.uk/bitesize/guides/zckdg82/revision/1) </small>
+
+## Urban models: looking into cities
+
+The Burgess model
+
+-   Created by E.W. Burgess in 1925
+-   Developed in rings, reflecting waves of immigrants
+-   Used Chicago as his model
+-   Most European cities developed this way (pre-automobile)
+
+## Urban models: looking into cities
+
+The Von Thünen model (The isolated state in 1826)
+
+-   Basic idea: Agricultural land uses follow predictable patterns around cities, which are the markets for the farm goods
+-   Goods with greatest demand and having the highest transport costs should be produced closest to the city
+
+## Urban models: looking into cities
+
+![](images/vonthunen.png)
+
+<small> Source: @coe2019economic </small>
+
+## Urban models: systems of cities
+
+Why aren't we all clustered in a huge city?
+
+::: incremental
+-   Diseconomies of scale
+
+-   AKA Decreasing returns to scale
+
+    ![](images/diseconomies.png){width="50%"}
+
+    <small> Source: @bettencourt2021introduction</small>
+:::
+
+## Urban models: systems of cities
+
+Central place theory
+
+![](images/christaller.jpg){width="150%"}
+
+<small> Source: @wood2012economic adapted from @christaller1966central </small>
+
+## Urban models: systems of cities
+
+Central place theory
+
+-   Spatial distribution of cities and towns in Southern Germany
+-   Inductive instead of deductive
+-   Hierarchy of 3 different goods (3, 2, 1), 3 different market areas and 3 different levels of urban centres
+-   Assumptions: homogeneous land and equal
+-   Transport possibilities in all directions
+
+## Urban models: systems of cities
+
+The core-periphery model
+
+::: r-fit-text
+::: incremental
+-   2 region model
+
+-   Transport cost steadily fall over time
+
+-   As transport cost ⟱, separation of production and consumption becomes feasible
+
+-   ⤇ Core-periphery
+:::
+:::
+
+![](images/core_periphery.png){width="80%"}
+
+<small><small> Source: @krugman1996trade </small></small>
+
+## Summary
+
+-   Urban structure is not random
+-   Multiple scales: individual, neighbourhoods, cities, urban networks
+-   Cities are complex adaptive systems
+
+## References {.scrollable}
