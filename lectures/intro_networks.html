@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="intro_networks_files/libs/clipboard/clipboard.min.js"></script>
+<script src="intro_networks_files/libs/quarto-html/tabby.min.js"></script>
+<script src="intro_networks_files/libs/quarto-html/popper.min.js"></script>
+<script src="intro_networks_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="intro_networks_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="intro_networks_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="intro_networks_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.37">
+
+  <title>Networks</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="intro_networks_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="intro_networks_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="intro_networks_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="intro_networks_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="intro_networks_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="intro_networks_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="intro_networks_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="intro_networks_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="intro_networks_files/libs/viz-1.8.2/viz.js"></script>
+  <link href="intro_networks_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+  <script src="intro_networks_files/libs/grViz-binding-1.0.9/grViz.js"></script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Networks</h1>
+  <p class="subtitle">An introduction</p>
+  <p class="author"></p><p><br>
+Emmanouil Tranos<br>
+<br>
+University of Bristol, Alan Turing Institute<br>
+<a href="mailto:e.tranos@bristol.ac.uk">e.tranos@bristol.ac.uk</a>, <a href="https://twitter.com/EmmanouilTranos">@EmmanouilTranos</a>, <a href="https://etranos.info/">etranos.info</a></p><p></p>
+</section>
+
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li><p>Why networks?</p></li>
+<li><p>Network Data</p></li>
+<li><p>Network Measures</p></li>
+</ul>
+</section>
+<section id="why-networks" class="slide level2">
+<h2>Why Networks</h2>
+<div class="r-fit-text">
+<div>
+<ul>
+<li class="fragment"><p>Networks are everywhere!</p></li>
+<li class="fragment"><p>The focus is not on individual attributes, but…</p></li>
+<li class="fragment"><p>… on who is connected to whom.</p></li>
+<li class="fragment"><p>AKA networks are about <strong>relationships</strong></p></li>
+<li class="fragment"><p>Interactions, or</p></li>
+<li class="fragment"><p>flows between nodes (actors, places, …)</p></li>
+<li class="fragment"><p>Social Network Analysis, Graph Theory, Network Science and Complexity Theory</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="scale-and-levels" class="slide level2">
+<h2>Scale and levels</h2>
+<p><small><small></small></small></p><small><small>
+<table>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Level (aggregation of linkages and nodes)</th>
+<th></th>
+<th>Geographical scale (network boundary)</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>1 – Local</td>
+<td>2 – Regional</td>
+<td>3 – Global</td>
+</tr>
+<tr class="even">
+<td>A -- Macro</td>
+<td>Cities</td>
+<td>City as a whole entity</td>
+<td>Central place system <span class="citation" data-cites="christaller1966central">(<a href="#/ref-christaller1966central" role="doc-biblioref" onclick="return false;">Christaller 1966</a>)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>B -- Meso</td>
+<td>Firms</td>
+<td>Clusters (Porter 2000)</td>
+<td>Regional economic intergration and functional polycentrism (e.g.&nbsp;Scott 2001: Boschma 2005)</td>
+<td>Global inter-firm network (e.g.&nbsp;Cohen 1981)</td>
+</tr>
+<tr class="even">
+<td>C – Micro</td>
+<td>People</td>
+<td>A neighbourly economic suport support network (e.g.&nbsp;Wellman 1979)</td>
+<td>A local labou market (e.g.&nbsp;Granovetter 1974)</td>
+<td>The global economic elite (Sassen 1991)</td>
+</tr>
+</tbody>
+</table>
+</small></small><p><small><small></small></small></p>
+<p><small><small> Source: <span class="citation" data-cites="neal2021handbook">(<a href="#/ref-neal2021handbook" role="doc-biblioref" onclick="return false;">Neal and Rozenblat 2021</a>)</span> </small></small></p>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="images/commuting_map.png" class="r-stretch quarto-figure-center"></section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+
+<img data-src="images/facebook_map.png" class="r-stretch"><p><small> Source: Facebook.com </small></p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+
+<img data-src="images/internet_map.png" class="r-stretch quarto-figure-center"><p><small> Source: <a href="http://www.opte.org/" class="uri">http://www.opte.org/</a> </small></p>
+</section>
+<section>
+<section id="network-data" class="title-slide slide level1 center">
+<h1>Network data</h1>
+
+</section>
+<section id="directed-non-weighted-networks" class="slide level2">
+<h2>1. Directed, non-weighted networks</h2>
+<p><small></small></p><small>
+<ul>
+<li><p>Basic elements: nodes and links</p></li>
+<li><p>Data is not arranged in vectors but on square matrices</p></li>
+<li><p>1 and 0 represent the existence of a link</p></li>
+</ul>
+<p><strong>Adjacency matrix</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</small><p><small></small></p>
+</section>
+<section id="directed-non-weighted-networks-1" class="slide level2">
+<h2>1. Directed, non-weighted networks</h2>
+<p><small></small></p><small>
+<ul>
+<li><p>Basic elements: nodes and links</p></li>
+<li><p>Data is not arranged in vectors but on square matrices</p></li>
+<li><p>1 and 0 represent the existence of a link</p>
+<p><strong>Edge list</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>i</th>
+<th>j</th>
+<th>w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>B</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>D</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>D</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>C</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</small><p><small></small></p>
+</section>
+<section id="directed-non-weighted-networks-2" class="slide level2">
+<h2>1. Directed, non-weighted networks</h2>
+<p><small></small></p><small>
+<ul>
+<li><p>Basic elements: nodes and links</p></li>
+<li><p>Data is not arranged in vectors but on square matrices</p></li>
+<li><p>1 and 0 represent the existence of a link</p></li>
+</ul>
+</small><p><small></small></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-6b7be1ad0948ae00def4" style="width:960px;height:288px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6b7be1ad0948ae00def4">{"x":{"diagram":"\ndigraph example1 {\n\n# a graph statement\ngraph [layout = neato]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D;      \n      \n# an edge statement\nedge [color = grey]\nA -> B\nA -> C\nA -> D\nA -> C\nC -> D\nD -> C\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="undirected-non-weighted-networks" class="slide level2">
+<h2>2. Undirected, non-weighted networks</h2>
+<p><small></small></p><small>
+<ul>
+<li><p>Symmetrical ties</p></li>
+<li><p>Symmetrical adjacency matrices</p></li>
+</ul>
+<p><strong>Adjacency matrix</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</small><p><small></small></p>
+</section>
+<section id="undirected-non-weighted-networks-1" class="slide level2">
+<h2>2. Undirected, non-weighted networks</h2>
+<p><small></small></p><small>
+<p><strong>Edge list</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>i</th>
+<th>j</th>
+<th>w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>B</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>D</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>A</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>A</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>B</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>D</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>A</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</small><p><small></small></p>
+</section>
+<section id="undirected-non-weighted-networks-2" class="slide level2">
+<h2>2. Undirected, non-weighted networks</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-5b7960d1df6782aa0682" style="width:960px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5b7960d1df6782aa0682">{"x":{"diagram":"\ndigraph example1 {\n\n# a graph statement\ngraph [layout = circo]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D;      \n      \n# an edge statement\nedge [color = grey]\nA -> B\nA -> C\nA -> D\nB -> C\nB -> A\nC -> A\nC -> B\nC -> D\nD -> C\nD -> A\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="directed-weighted-networks" class="slide level2">
+<h2>3. Directed, weighted networks</h2>
+<p>Links are characterized by weights i.e.&nbsp;strength of a friendship, commuting flows, trade flows</p>
+<p><small></small></p><small>
+<p><strong>Adjacency matrix</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</small><p><small></small></p>
+</section>
+<section id="directed-weighted-networks-1" class="slide level2">
+<h2>3. Directed, weighted networks</h2>
+<p>Links are characterized by weights i.e.&nbsp;strength of a friendship, commuting flows, trade flows</p>
+<p><strong>Edge list</strong></p>
+<p><small></small></p><small>
+<table>
+<thead>
+<tr class="header">
+<th>i</th>
+<th>j</th>
+<th>w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>B</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>D</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>D</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>C</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+</small><p><small></small></p>
+</section>
+<section id="directed-weighted-networks-2" class="slide level2">
+<h2>3. Directed, weighted networks</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-2619d61a7c4e25fa27e1" style="width:960px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2619d61a7c4e25fa27e1">{"x":{"diagram":"\ndigraph example1 {\n\n# a graph statement\ngraph [layout = circo]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D;      \n      \n# an edge statement\nedge [color = grey]\nA -> B [ penwidth = 3]\nA -> C [ penwidth = 1]\nA -> D [ penwidth = 5]\nA -> C [ penwidth = 1]\nC -> D [ penwidth = 6]\nD -> C [ penwidth = 7]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="undirected-weighted-networks" class="slide level2">
+<h2>4. Undirected, weighted networks</h2>
+<p><small></small></p><small>
+<p>Links are characterized by weights i.e.&nbsp;strength of a friendship, commuting flows, trade flows…</p>
+<p>… and also have symmetrical matrices</p>
+<p><strong>Adjacency matrix</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>5</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</small><p><small></small></p>
+</section>
+<section id="undirected-weighted-networks-1" class="slide level2">
+<h2>4. Undirected, weighted networks</h2>
+<p><small></small></p><small>
+<p><strong>Edge list</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>i</th>
+<th>j</th>
+<th>w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>B</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>D</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>C</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>A</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>D</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>A</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>B</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>C</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>A</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</small><p><small></small></p>
+</section>
+<section id="undirected-weighted-networks-2" class="slide level2">
+<h2>4. Undirected, weighted networks</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-9583a0e540f154ecd7e1" style="width:960px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9583a0e540f154ecd7e1">{"x":{"diagram":"\ndigraph example1 {\n\n# a graph statement\ngraph [layout = circo]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D;      \n      \n# an edge statement\nedge [color = grey]\nA -> B [ penwidth = 3]\nA -> C [ penwidth = 1]\nA -> D [ penwidth = 5]\nB -> C [ penwidth = 1]\nB -> A [ penwidth = 3]\nC -> A [ penwidth = 1]\nC -> B [ penwidth = 1]\nC -> D [ penwidth = 6]\nD -> C [ penwidth = 6]\nD -> A [ penwidth = 5]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="network-data-summary" class="slide level2">
+<h2>Network data: summary</h2>
+<div>
+<ul>
+<li class="fragment"><p>4 possible combinations of network data</p>
+<ol type="1">
+<li class="fragment"><p>Directional and non-weighted (or binary)</p></li>
+<li class="fragment"><p>Directional and weighted</p></li>
+<li class="fragment"><p>Undirected and non-weighted (or binary)</p></li>
+<li class="fragment"><p>Undirected and weighted</p></li>
+</ol></li>
+<li class="fragment"><p>Nodes, aka vertices (singular: vertex)</p></li>
+<li class="fragment"><p>Links or ties, edges or arcs</p></li>
+<li class="fragment"><p>Conventional data: actors and attributes</p></li>
+<li class="fragment"><p>Network data: actors and <strong>their relations</strong></p></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="network-measures" class="title-slide slide level1 center">
+<h1>Network measures</h1>
+
+</section>
+<section id="network-size" class="slide level2">
+<h2>Network size</h2>
+<ul>
+<li><p><span class="math inline">\(k\)</span> numbers of nodes</p></li>
+<li><p>maximum number of links:</p></li>
+<li><p><span class="math inline">\(k(k-1)\)</span> for directed</p></li>
+<li><p><span class="math inline">\(k(k-1)/2\)</span> for undirected networks</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-b20cde998853b196caa3" style="width:960px;height:288px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b20cde998853b196caa3">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = dot,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E\n      \n# an edge statement\nedge [color = grey]\nA -- B\nB -- C\nB -- D\nB -- E\nC -- D\nE -- D\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="network-density" class="slide level2">
+<h2>Network density</h2>
+<ul>
+<li><p>numbers of links / numbers of nodes:</p></li>
+<li><p><span class="math inline">\(L/k(k-1)\)</span> for directed</p></li>
+<li><p><span class="math inline">\(2L/k(k-1)\)</span> for undirected networks</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-504613048136ca9073a1" style="width:960px;height:288px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-504613048136ca9073a1">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = dot,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E\n      \n# an edge statement\nedge [color = grey]\nA -- B\nB -- C\nB -- D\nB -- E\nC -- D\nE -- D\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="network-distance" class="slide level2">
+<h2>Network distance</h2>
+<p><small></small></p><small>
+<p>A macro characteristic of the network ➔ efficiency</p>
+<ul>
+<li><p>Multiple <em>paths</em> between two nodes</p></li>
+<li><p>A <em>walk</em> is a path in which each node and each link are used once</p></li>
+<li><p><em>Geodesic distance</em>: the number of relations in the shortest possible path from one node to another</p></li>
+<li><p><em>Diameter</em>: the longest geodesic distance in the network</p></li>
+</ul>
+</small><p><small></small></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-369daefe4b9d5aae7f44" style="width:960px;height:268.8px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-369daefe4b9d5aae7f44">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = dot,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E\n      \n# an edge statement\nedge [color = grey]\nA -- B\nB -- C\nB -- D\nB -- E\nC -- D\nE -- D\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="reciprocity" class="slide level2">
+<h2>Reciprocity</h2>
+<ul>
+<li><p>The extent to which ties are reciprocated (if A ➔ B, then B ➔ A)</p></li>
+<li><p>At least two different approaches</p></li>
+<li><p>Reciprocated ties / maximum number of ties (0.33)</p></li>
+<li><p>Reciprocated ties / number of existing ties (0.5)</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-d6da70e844e68b3f1124" style="width:960px;height:192px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d6da70e844e68b3f1124">{"x":{"diagram":"\ndigraph  {\n\n# a graph statement\ngraph [layout = dot,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C;   \n      \n# an edge statement\nedge [color = grey]\nA -> B\nB -> A\nB -> C\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="assortativity" class="slide level2">
+<h2>Assortativity</h2>
+<ul>
+<li><p>A bias towards connections between network nodes with similar network characteristics</p></li>
+<li><p>Assortativity coefficient is the Pearson correlation coefficient of the degree centralities of pairs of connected nodes</p></li>
+</ul>
+</section></section>
+<section>
+<section id="sub-structures" class="title-slide slide level1 center">
+<h1>Sub-structures</h1>
+<p><small></small></p><small>
+<ul>
+<li><p>dyads: pair of connected nodes</p></li>
+<li><p>triads: three connected nodes</p></li>
+<li><p>ego-networks</p></li>
+<li><p>cliques: the maximum number of actors who have all possible ties present among themselves; a maximal complete sub-graph</p></li>
+</ul>
+</small><p><small></small></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-c1a08c220ae09af2a0da" style="width:960px;height:240px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c1a08c220ae09af2a0da">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = neato,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E\n\nnode [fillcolor = red]\nEGO\n\n# an edge statement\nedge [color = grey]\n\nEGO -- {A B C D E}\nB -- {C D E}\nC -- {E}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="clustering" class="slide level2">
+<h2>Clustering</h2>
+<ul>
+<li><p>Large proportion of links are highly “clustered” into local neighborhoods ➔ small worlds</p></li>
+<li><p><span class="math inline">\(C_{i} = 2 E_{i} / k_{i}(k_{i}-1)\)</span></p></li>
+<li><p>the ratio between the number of edges <span class="math inline">\(E_{i}\)</span> that exist among <span class="math inline">\(i\)</span>’s nearest neighbors and the maximum number of these edges, where <span class="math inline">\(k_{i}\)</span> is the number of nodes in the sub-net</p></li>
+<li><p>AKA Transitivity</p></li>
+</ul>
+</section>
+<section id="community-detection" class="slide level2">
+<h2>Community detection</h2>
+<ul>
+<li><p>Exploratory process</p></li>
+<li><p>The emphasis is not on the behaviour of single entities, but on the information of who is connected to whom</p></li>
+<li><p>“The problem of community detection requires the partition of a network into communities of densely connected nodes, with the nodes belonging to different communities being only sparsely connected” <span class="citation" data-cites="blondel2008fast">(<a href="#/ref-blondel2008fast" role="doc-biblioref" onclick="return false;">Blondel et al. 2008, 2</a>)</span></p></li>
+<li><p>Clusters of nodes with dense connections <em>inside</em> the clusters, but <em>not between</em> the clusters</p></li>
+</ul>
+</section>
+<section id="community-detection-1" class="slide level2">
+<h2>Community detection</h2>
+<div class="r-fit-text">
+<ul>
+<li><p>Louvain method <span class="citation" data-cites="blondel2008fast">(<a href="#/ref-blondel2008fast" role="doc-biblioref" onclick="return false;">Blondel et al. 2008</a>)</span>: maximization of links inside the communities (modularity)</p></li>
+<li><p>Network of communities extracted from a Belgian mobile phone network</p></li>
+<li><p>Node size proportional to the number of individuals in the community</p></li>
+<li><p>Colour represents the main language spoken in the community (red for French and green for Dutch)</p></li>
+<li><p>What does the intermediate community of mixed colours between the two main clusters represent?</p></li>
+</ul>
+</div>
+
+<img data-src="images/blondel.png" class="r-stretch"></section>
+<section id="community-detection-2" class="slide level2">
+<h2>Community detection</h2>
+<div class="r-fit-text">
+<p>Redrawing the Map of Great Britain from a Network of Human Interactions <span class="citation" data-cites="ratti2010redrawing">(<a href="#/ref-ratti2010redrawing" role="doc-biblioref" onclick="return false;">Ratti et al. 2010</a>)</span></p>
+<ul>
+<li><p>Do administrative boundaries follow the more natural ways people interact across space?</p></li>
+<li><p>Large telecommunications database in Great Britain.</p></li>
+</ul>
+</div>
+
+<img data-src="images/ratti.png" class="r-stretch"></section></section>
+<section>
+<section id="centrality-measures" class="title-slide slide level1 center">
+<h1>Centrality measures</h1>
+
+</section>
+<section class="slide level2">
+
+<ul>
+<li><p>In Social Network Analysis centrality is related with power: e.g.&nbsp;dominance and dependence</p></li>
+<li><p>Micro and macro property</p></li>
+<li><p>Position in the network</p></li>
+<li><p>Many centrality measures</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<iframe src="http://schochastics.net/sna/periodic.html" width="1300" height="600" frameborder="0" scrolling="yes">
+</iframe>
+<p><small><small> Source: <a href="http://schochastics.net/sna/periodic.html">schochastics.net</a> </small></small></p>
+</section>
+<section id="degree-centrality-for-undirected-networks" class="slide level2">
+<h2>Degree centrality for undirected networks</h2>
+<ul>
+<li><p>The simplest centrality measure</p></li>
+<li><p>Who has the most connections?</p></li>
+<li><p>The number of links per node</p></li>
+<li><p><span class="math inline">\(D_{i} = \sum_{j}^{N} x_{ij}= \sum_{j}^{N} x_{ji}\)</span></p></li>
+</ul>
+</section>
+<section id="degree-centrality-for-directed-networks" class="slide level2">
+<h2>Degree centrality for directed networks</h2>
+<ul>
+<li><p>Indegree: the number of ingoing links per node <span class="math inline">\(D_{i} = \sum_{j}^{N} x_{ji}\)</span></p></li>
+<li><p>Outdegree: the number of outgoing links per node <span class="math inline">\(D_{i} = \sum_{j}^{N} x_{ij}\)</span></p></li>
+</ul>
+</section>
+<section id="degree-centrality-for-weighted-networks" class="slide level2">
+<h2>Degree centrality for weighted networks</h2>
+<p><span class="math display">\[D_{i} = \sum_{j}^{N} w_{ij} = \sum_{j}^{N} w_{ji}\]</span></p>
+<p><span class="math inline">\(w\)</span> denotes the weight of the links</p>
+</section>
+<section id="degree-cenralities" class="slide level2">
+<h2>Degree cenralities</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="htmlwidget-30c9de7319cf0c691e06" style="width:960px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-30c9de7319cf0c691e06">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = neato,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E\n\nnode [fillcolor = red]\nEGO\n\n# an edge statement\nedge [color = grey]\n\nEGO -- {A B C D E}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="degree-cenralities-1" class="slide level2">
+<h2>Degree cenralities</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="htmlwidget-cc32c9d104bdbcaee72e" style="width:960px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cc32c9d104bdbcaee72e">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = dot,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E\n\n# an edge statement\nedge [color = grey]\n\nA -- B\nB -- C\nC -- D\nD -- E\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="degree-cenralities-2" class="slide level2">
+<h2>Degree cenralities</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="htmlwidget-764deae725d5458fcc66" style="width:960px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-764deae725d5458fcc66">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = circo,\n      rankdir = LR]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E\n\n# an edge statement\nedge [color = grey]\n\nA -- B\nB -- C\nC -- D\nD -- E\nE -- A\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="degree-cenralities-3" class="slide level2">
+<h2>Degree cenralities</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>out-degree</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>5</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>9</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>7</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td>in-degree</td>
+<td>12</td>
+<td>7</td>
+<td>7</td>
+<td>14</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="closeness-centrality" class="slide level2">
+<h2>Closeness centrality</h2>
+<ul>
+<li><p>Which node has the shortest distance to other nodes</p></li>
+<li><p>Instead of focusing on the number of links, the focus turns to the network distances</p></li>
+<li><p>Different definitions:</p></li>
+<li><p>Closeness, <span class="math inline">\(c_{i} = 1/\sum_{j} d_{ij}\)</span></p></li>
+<li><p>Fareness, <span class="math inline">\(c_{i} = \sum_{j} d_{ij}\)</span></p></li>
+<li><p><code>igraph</code> calculates closeness</p></li>
+</ul>
+</section>
+<section id="betweenness-centrality" class="slide level2">
+<h2>Betweenness centrality</h2>
+<ul>
+<li><p>Which nodes control information flows</p></li>
+<li><p>How many geodesic links between actors i and j contain actor k?</p></li>
+</ul>
+<p><span class="math inline">\(B_{k} = \sum_{i \not=j \not=k} \frac{g_{ij}(k)}{g_{ij}}\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-9405ec1667a9abd29393" style="width:960px;height:192px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9405ec1667a9abd29393">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = neato,\n      rankdir = BT]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange]\nA; B; C; D; E; G; H; I; J; K\n\nnode [fillcolor = red]\nF\n\n# an edge statement\nedge [color = grey]\n\nA -- {B C D E}\nB -- {C D E}\nC -- {E}\n\nF -- {A H I J K}\nG -- { I J K }\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="eigenvector-centrality" class="slide level2">
+<h2>Eigenvector centrality</h2>
+<ul>
+<li><p>Not all connections are equal</p></li>
+<li><p>Connections to more central vertices are more important than connections to less central ones</p></li>
+<li><p>It is still important to have a large number of connections, but a node with fewer but more important connections will end up being more central than a node with more but less important links</p></li>
+<li><p>Global structure of the network: both direct and indirect links</p></li>
+<li><p>Eigenvector of the adjacency matrix associated with the larger eigenvalue</p></li>
+</ul>
+</section>
+<section id="pagerank-centrality" class="slide level2">
+<h2>PageRank centrality</h2>
+<ul>
+<li><p>The basis of <a href="http://infolab.stanford.edu/~backrub/google.html">Google search engine</a></p></li>
+<li><p>Webpages that link to <span class="math inline">\(i\)</span>, and have high PageRank scores themselves, should be given more weight.</p></li>
+<li><p>Webpages that link to <span class="math inline">\(i\)</span>, but link to a lot of other webpages in general, should be given less weight.</p></li>
+<li><p>Directerd networks</p></li>
+<li><p>Iterative algorithm</p></li>
+</ul>
+</section>
+<section id="centralities" class="slide level2">
+<h2>Centralities</h2>
+<ul>
+<li><p>While easy to identify in simple graphs, much more difficult in large, complex networks</p></li>
+<li><p>Various other centrality measures exist (e.g.&nbsp;see <a href="https://igraph.org/r/"><code>igraph</code></a>)</p></li>
+<li><p>Highlight different aspects of the distribution and sources of power</p></li>
+</ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+<div class="footer footer-default">
+
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-blondel2008fast" class="csl-entry" role="doc-biblioentry">
+Blondel, Vincent D, Jean-Loup Guillaume, Renaud Lambiotte, and Etienne Lefebvre. 2008. <span>“Fast Unfolding of Communities in Large Networks.”</span> <em>Journal of Statistical Mechanics: Theory and Experiment</em> 2008 (10): P10008.
+</div>
+<div id="ref-christaller1966central" class="csl-entry" role="doc-biblioentry">
+Christaller, Walter. 1966. <em>Central Places in Southern Germany</em>. Vol. 10. Prentice-Hall.
+</div>
+<div id="ref-neal2021handbook" class="csl-entry" role="doc-biblioentry">
+Neal, Zachary P, and Céline Rozenblat. 2021. <em>Handbook of Cities and Networks</em>. Edward Elgar Publishing.
+</div>
+<div id="ref-ratti2010redrawing" class="csl-entry" role="doc-biblioentry">
+Ratti, Carlo, Stanislav Sobolevsky, Francesco Calabrese, Clio Andris, Jonathan Reades, Mauro Martino, Rob Claxton, and Steven H Strogatz. 2010. <span>“Redrawing the Map of Great Britain from a Network of Human Interactions.”</span> <em>PloS One</em> 5 (12): e14248.
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="intro_networks_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="intro_networks_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="intro_networks_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="intro_networks_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="intro_networks_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="intro_networks_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="intro_networks_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="intro_networks_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="intro_networks_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="intro_networks_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>

@@ -5,7 +5,7 @@ author: |
   | Emmanouil Tranos
   |
   | University of Bristol, Alan Turing Institute 
-  | e.tranos@bristol.ac.uk, [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+  | [e.tranos@bristol.ac.uk](mailto:e.tranos@bristol.ac.uk), [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
 
 format: revealjs
 editor: visual
@@ -25,13 +25,15 @@ path <- find_rstudio_root_file()
 images.path <- paste0(path, "/images/")
 ```
 
-## Introduction
+## Outline
 
 -   Big data vs. just data
 
 -   Smart city
 
 -   Urban dashboards
+
+-   Digital twins
 
 ## Big data vs. just data
 
@@ -193,7 +195,25 @@ Rio de Janeiro, Brazil: The first *smart city*
 
 ## Digital twins
 
-???
+::: r-fit-text
+> A mirror image of a physical process that is articulated alongside the process in question, usually matching exactly the operation of the physical process which takes place in real time
 
-???
+> a variety of digital simulation models that run alongside real-time processes that pertain to social and economic systems as well as physical systems
+
+Models are simplifications not replications of the real thing
+
+::: footer
+Based on @batty2018digital
+:::
+:::
+
+## Digital twins
+
+<!-- ![](images/digital_twin.png) -->
+
+<!-- <small><small> Source: <https://webinars.sw.siemens.com/en-US/digital-twin-in-manufacturing/> </small></small> -->
+
+![](images/digital_twin.png)
+<small><small> Source: [@bolton2018gemini] </small></small>
+
 ## References {.scrollable}

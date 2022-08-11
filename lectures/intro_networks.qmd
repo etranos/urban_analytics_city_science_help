@@ -1,0 +1,879 @@
+---
+title: "Networks"
+subtitle: "An introduction"
+author: |
+  | 
+  | Emmanouil Tranos
+  |
+  | University of Bristol, Alan Turing Institute 
+  | [e.tranos@bristol.ac.uk](mailto:e.tranos@bristol.ac.uk), [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+format: revealjs
+editor: visual
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| results: false
+#| include: false
+
+library(rprojroot)
+library(DiagrammeR)
+
+# This is the project path
+path <- find_rstudio_root_file()
+images.path <- paste0(path, "/images/")
+```
+
+## Outline
+
+-   Why networks?
+
+-   Network Data
+
+-   Network Measures
+
+## Why Networks
+
+::: r-fit-text
+::: incremental
+-   Networks are everywhere!
+
+-   The focus is not on individual attributes, but...
+
+-   ... on who is connected to whom.
+
+-   AKA networks are about **relationships**
+
+-   Interactions, or
+
+-   flows between nodes (actors, places, ...)
+
+-   Social Network Analysis, Graph Theory, Network Science and Complexity Theory
+:::
+:::
+
+## Scale and levels
+
+<small><small>
+
+| Level (aggregation of linkages and nodes) |        | Geographical scale (network boundary)                             |                                                                                            |                                             |
+|---------------|---------------|---------------|---------------|---------------|
+|                                           |        | 1 -- Local                                                        | 2 -- Regional                                                                              | 3 -- Global                                 |
+| A \-- Macro                               | Cities | City as a whole entity                                            | Central place system [@christaller1966central]                                             |                                             |
+| B \-- Meso                                | Firms  | Clusters (Porter 2000)                                            | Regional economic intergration and functional polycentrism (e.g. Scott 2001: Boschma 2005) | Global inter-firm network (e.g. Cohen 1981) |
+| C -- Micro                                | People | A neighbourly economic suport support network (e.g. Wellman 1979) | A local labou market (e.g. Granovetter 1974)                                               | The global economic elite (Sassen 1991)     |
+
+</small></small>
+
+<small><small> Source: [@neal2021handbook] </small></small>
+
+## 
+
+![](images/commuting_map.png){fig-align="center"}
+
+## 
+
+![](images/facebook_map.png)
+
+<small> Source: Facebook.com </small>
+
+## 
+
+![](images/internet_map.png){fig-align="center"}
+
+<small> Source: <http://www.opte.org/> </small>
+
+# Network data
+
+## 1. Directed, non-weighted networks
+
+<small>
+
+-   Basic elements: nodes and links
+
+-   Data is not arranged in vectors but on square matrices
+
+-   1 and 0 represent the existence of a link
+
+**Adjacency matrix**
+
+|     |     |     |     |     |
+|-----|-----|-----|-----|-----|
+|     | A   | B   | C   | D   |
+| A   | 0   | 1   | 1   | 1   |
+| B   | 0   | 0   | 1   | 0   |
+| C   | 0   | 0   | 0   | 1   |
+| D   | 0   | 0   | 0   | 0   |
+
+</small>
+
+## 1. Directed, non-weighted networks
+
+<small>
+
+-   Basic elements: nodes and links
+
+-   Data is not arranged in vectors but on square matrices
+
+-   1 and 0 represent the existence of a link
+
+    **Edge list**
+
+    | i   | j   | w   |
+    |-----|-----|-----|
+    | A   | B   | 1   |
+    | A   | C   | 1   |
+    | A   | D   | 1   |
+    | B   | C   | 1   |
+    | C   | D   | 1   |
+    | D   | C   | 1   |
+
+</small>
+
+## 1. Directed, non-weighted networks
+
+<small>
+
+-   Basic elements: nodes and links
+
+-   Data is not arranged in vectors but on square matrices
+
+-   1 and 0 represent the existence of a link
+
+</small>
+
+```{r, fig.height=3}
+grViz("
+digraph example1 {
+
+# a graph statement
+graph [layout = neato]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D;      
+      
+# an edge statement
+edge [color = grey]
+A -> B
+A -> C
+A -> D
+A -> C
+C -> D
+D -> C
+}")
+```
+
+## 2. Undirected, non-weighted networks
+
+<small>
+
+-   Symmetrical ties
+
+-   Symmetrical adjacency matrices
+
+**Adjacency matrix**
+
+|     |     |     |     |     |
+|-----|-----|-----|-----|-----|
+|     | A   | B   | C   | D   |
+| A   | 0   | 1   | 1   | 1   |
+| B   | 1   | 0   | 1   | 0   |
+| C   | 1   | 1   | 0   | 1   |
+| D   | 1   | 0   | 1   | 0   |
+
+</small>
+
+## 2. Undirected, non-weighted networks
+
+<small>
+
+**Edge list**
+
+| i   | j   | w   |
+|-----|-----|-----|
+| A   | B   | 1   |
+| A   | C   | 1   |
+| A   | D   | 1   |
+| B   | C   | 1   |
+| B   | A   | 1   |
+| C   | A   | 1   |
+| C   | B   | 1   |
+| C   | D   | 1   |
+| D   | C   | 1   |
+| D   | A   | 1   |
+
+</small>
+
+## 2. Undirected, non-weighted networks
+
+```{r, fig.height=5}
+grViz("
+digraph example1 {
+
+# a graph statement
+graph [layout = circo]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D;      
+      
+# an edge statement
+edge [color = grey]
+A -> B
+A -> C
+A -> D
+B -> C
+B -> A
+C -> A
+C -> B
+C -> D
+D -> C
+D -> A
+}")
+```
+
+## 3. Directed, weighted networks
+
+Links are characterized by weights i.e. strength of a friendship, commuting flows, trade flows
+
+<small>
+
+**Adjacency matrix**
+
+|     |     |     |     |     |
+|-----|-----|-----|-----|-----|
+|     | A   | B   | C   | D   |
+| A   | 0   | 3   | 1   | 5   |
+| B   | 0   | 0   | 1   | 0   |
+| C   | 0   | 0   | 0   | 6   |
+| D   | 0   | 0   | 7   | 0   |
+
+
+</small>
+
+## 3. Directed, weighted networks
+
+Links are characterized by weights i.e. strength of a friendship, commuting flows, trade flows
+
+**Edge list**
+
+<small>
+
+| i   | j   | w   |
+|-----|-----|-----|
+| A   | B   | 3   |
+| A   | C   | 1   |
+| A   | D   | 5   |
+| B   | C   | 1   |
+| C   | D   | 6   |
+| D   | C   | 7   |
+
+</small>
+
+## 3. Directed, weighted networks
+
+```{r, fig.height=5}
+grViz("
+digraph example1 {
+
+# a graph statement
+graph [layout = circo]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D;      
+      
+# an edge statement
+edge [color = grey]
+A -> B [ penwidth = 3]
+A -> C [ penwidth = 1]
+A -> D [ penwidth = 5]
+A -> C [ penwidth = 1]
+C -> D [ penwidth = 6]
+D -> C [ penwidth = 7]
+}")
+```
+
+## 4. Undirected, weighted networks
+
+<small>
+
+Links are characterized by weights i.e. strength of a friendship, commuting flows, trade flows...
+
+... and also have symmetrical matrices
+
+**Adjacency matrix**
+
+|     |     |     |     |     |
+|-----|-----|-----|-----|-----|
+|     | A   | B   | C   | D   |
+| A   | 0   | 3   | 1   | 5   |
+| B   | 3   | 0   | 1   | 0   |
+| C   | 1   | 1   | 0   | 6   |
+| D   | 5   | 0   | 6   | 0   |
+
+</small>
+
+## 4. Undirected, weighted networks
+
+<small>
+
+**Edge list**
+
+| i   | j   | w   |
+|-----|-----|-----|
+| A   | B   | 3   |
+| A   | C   | 1   |
+| A   | D   | 5   |
+| B   | C   | 1   |
+| B   | A   | 3   |
+| C   | D   | 6   |
+| C   | A   | 1   |
+| C   | B   | 1   |
+| D   | C   | 6   |
+| D   | A   | 5   |
+
+</small>
+
+## 4. Undirected, weighted networks
+
+```{r, fig.height=5}
+grViz("
+digraph example1 {
+
+# a graph statement
+graph [layout = circo]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D;      
+      
+# an edge statement
+edge [color = grey]
+A -> B [ penwidth = 3]
+A -> C [ penwidth = 1]
+A -> D [ penwidth = 5]
+B -> C [ penwidth = 1]
+B -> A [ penwidth = 3]
+C -> A [ penwidth = 1]
+C -> B [ penwidth = 1]
+C -> D [ penwidth = 6]
+D -> C [ penwidth = 6]
+D -> A [ penwidth = 5]
+}")
+```
+
+## Network data: summary
+
+::: incremental
+-   4 possible combinations of network data
+
+    1.  Directional and non-weighted (or binary)
+
+    2.  Directional and weighted
+
+    3.  Undirected and non-weighted (or binary)
+
+    4.  Undirected and weighted
+
+-   Nodes, aka vertices (singular: vertex)
+
+-   Links or ties, edges or arcs
+
+-   Conventional data: actors and attributes
+
+-   Network data: actors and **their relations**
+:::
+
+# Network measures
+
+## Network size
+
+-   $k$ numbers of nodes
+
+-   maximum number of links:
+
+-   $k(k-1)$ for directed
+
+-   $k(k-1)/2$ for undirected networks
+
+```{r, fig.height=3}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = dot,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E
+      
+# an edge statement
+edge [color = grey]
+A -- B
+B -- C
+B -- D
+B -- E
+C -- D
+E -- D
+}")
+```
+
+## Network density
+
+-   numbers of links / numbers of nodes:
+
+-   $L/k(k-1)$ for directed
+
+-   $2L/k(k-1)$ for undirected networks
+
+
+```{r, fig.height=3}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = dot,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E
+      
+# an edge statement
+edge [color = grey]
+A -- B
+B -- C
+B -- D
+B -- E
+C -- D
+E -- D
+}")
+```
+
+## Network distance
+
+<small>
+
+A macro characteristic of the network ➔ efficiency
+
+-   Multiple *paths* between two nodes
+
+-   A *walk* is a path in which each node and each link are used once
+
+-   *Geodesic distance*: the number of relations in the shortest possible path from one node to another
+
+-   *Diameter*: the longest geodesic distance in the network
+
+</small>
+
+```{r, fig.height=2.8}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = dot,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E
+      
+# an edge statement
+edge [color = grey]
+A -- B
+B -- C
+B -- D
+B -- E
+C -- D
+E -- D
+}")
+```
+
+## Reciprocity
+
+-   The extent to which ties are reciprocated (if A ➔ B, then B ➔ A)
+
+-   At least two different approaches 
+
+  -   Reciprocated ties / maximum number of ties (0.33) 
+  
+  -   Reciprocated ties / number of existing ties (0.5)
+
+```{r, fig.height=2}
+grViz("
+digraph  {
+
+# a graph statement
+graph [layout = dot,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C;   
+      
+# an edge statement
+edge [color = grey]
+A -> B
+B -> A
+B -> C
+}")
+```
+
+## Assortativity
+
+-   A bias towards connections between network nodes with similar network characteristics
+
+-   Assortativity coefficient is the Pearson correlation coefficient of the degree centralities of pairs of connected nodes
+
+# Sub-structures
+
+<small>
+
+-   dyads: pair of connected nodes
+
+-   triads: three connected nodes
+
+-   ego-networks
+
+-   cliques: the maximum number of actors who have all possible ties present among themselves; a maximal complete sub-graph
+
+</small>
+
+```{r, fig.height=2.5}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = neato,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E
+
+node [fillcolor = red]
+EGO
+
+# an edge statement
+edge [color = grey]
+
+EGO -- {A B C D E}
+B -- {C D E}
+C -- {E}
+}")
+```
+
+## Clustering
+
+-   Large proportion of links are highly "clustered" into local neighborhoods ➔ small worlds
+
+-   $C_{i} = 2 E_{i} / k_{i}(k_{i}-1)$
+
+-   the ratio between the number of edges $E_{i}$ that exist among $i$'s nearest neighbors and the maximum number of these edges, where $k_{i}$ is the number of nodes in the sub-net
+
+-   AKA Transitivity
+
+## Community detection
+
+-   Exploratory process
+
+-   The emphasis is not on the behaviour of single entities, but on the information of who is connected to whom
+
+-   "The problem of community detection requires the partition of a network into communities of densely connected nodes, with the nodes belonging to different communities being only sparsely connected" [@blondel2008fast, p. 2]
+
+-   Clusters of nodes with dense connections *inside* the clusters, but *not between* the clusters
+
+## Community detection
+
+::: r-fit-text
+-   Louvain method [@blondel2008fast]: maximization of links inside the communities (modularity)
+
+-   Network of communities extracted from a Belgian mobile phone network
+
+-   Node size proportional to the number of individuals in the community
+
+-   Colour represents the main language spoken in the community (red for French and green for Dutch)
+
+-   What does the intermediate community of mixed colours between the two main clusters represent?
+:::
+
+![](images/blondel.png)
+
+## Community detection
+
+::: r-fit-text
+Redrawing the Map of Great Britain from a Network of Human Interactions [@ratti2010redrawing]
+
+-   Do administrative boundaries follow the more natural ways people interact across space?
+
+-   Large telecommunications database in Great Britain.
+:::
+
+![](images/ratti.png)
+
+# Centrality measures
+
+------------------------------------------------------------------------
+
+-   In Social Network Analysis centrality is related with power: e.g. dominance and dependence
+
+-   Micro and macro property
+
+-   Position in the network
+
+-   Many centrality measures
+
+------------------------------------------------------------------------
+
+<iframe src="http://schochastics.net/sna/periodic.html" width="1300" height="600" frameBorder="0" scrolling="yes">
+
+</iframe>
+
+<small><small> Source: [schochastics.net](http://schochastics.net/sna/periodic.html) </small></small>
+
+## Degree centrality for undirected networks
+
+-   The simplest centrality measure
+
+-   Who has the most connections?
+
+-   The number of links per node
+
+-   $D_{i} = \sum_{j}^{N} x_{ij}= \sum_{j}^{N} x_{ji}$
+
+## Degree centrality for directed networks
+
+-   Indegree: the number of ingoing links per node $D_{i} = \sum_{j}^{N} x_{ji}$
+
+-   Outdegree: the number of outgoing links per node $D_{i} = \sum_{j}^{N} x_{ij}$
+
+## Degree centrality for weighted networks
+
+$$D_{i} = \sum_{j}^{N} w_{ij} = \sum_{j}^{N} w_{ji}$$
+
+$w$ denotes the weight of the links
+
+## Degree cenralities
+
+```{r, fig.height=5, fig.align='center'}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = neato,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E
+
+node [fillcolor = red]
+EGO
+
+# an edge statement
+edge [color = grey]
+
+EGO -- {A B C D E}
+}")
+```
+
+## Degree cenralities
+
+```{r, fig.height=5, fig.align='center'}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = dot,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E
+
+# an edge statement
+edge [color = grey]
+
+A -- B
+B -- C
+C -- D
+D -- E
+}")
+```
+
+## Degree cenralities
+
+```{r, fig.height=5, fig.align='center'}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = circo,
+      rankdir = LR]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E
+
+# an edge statement
+edge [color = grey]
+
+A -- B
+B -- C
+C -- D
+D -- E
+E -- A
+}")
+```
+
+## Degree cenralities
+
+|           | A   | B   | C   | D   | out-degree |
+|-----------|-----|-----|-----|-----|------------|
+| A         | 0   | 3   | 1   | 5   | 9          |
+| B         | 3   | 0   | 1   | 0   | 4          |
+| C         | 2   | 4   | 0   | 9   | 15         |
+| D         | 7   | 0   | 5   | 0   | 12         |
+| in-degree | 12  | 7   | 7   | 14  |            |
+
+## Closeness centrality
+
+-   Which node has the shortest distance to other nodes
+
+-   Instead of focusing on the number of links, the focus turns to the network distances
+
+-   Different definitions:
+
+-   Closeness, $c_{i} = 1/\sum_{j} d_{ij}$
+
+-   Fareness, $c_{i} = \sum_{j} d_{ij}$
+
+-   `igraph` calculates closeness
+
+## Betweenness centrality
+
+-   Which nodes control information flows
+
+-   How many geodesic links between actors i and j contain actor k?
+
+$B_{k} = \sum_{i \not=j \not=k} \frac{g_{ij}(k)}{g_{ij}}$
+
+
+```{r, fig.height=2}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = neato,
+      rankdir = BT]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange]
+A; B; C; D; E; G; H; I; J; K
+
+node [fillcolor = red]
+F
+
+# an edge statement
+edge [color = grey]
+
+A -- {B C D E}
+B -- {C D E}
+C -- {E}
+
+F -- {A H I J K}
+G -- { I J K }
+
+}")
+```
+
+## Eigenvector centrality
+
+-   Not all connections are equal 
+
+-   Connections to more central vertices are more important than connections to less central ones
+
+-   It is still important to have a large number of connections, but a node with fewer but more important connections will end up being more central than a node with more but less important links
+
+-   Global structure of the network: both direct and indirect links
+
+-   Eigenvector of the adjacency matrix associated with the larger eigenvalue
+
+## PageRank centrality
+
+-   The basis of [Google search engine](http://infolab.stanford.edu/~backrub/google.html)
+
+-   Webpages that link to $i$, and have high PageRank scores themselves, should be given more weight. 
+
+-   Webpages that link to $i$, but link to a lot of other webpages in general, should be given less weight.
+
+-   Directerd networks
+
+-   Iterative algorithm
+
+## Centralities
+
+-   While easy to identify in simple graphs, much more difficult in large, complex networks
+
+-   Various other centrality measures exist (e.g. see [`igraph`](https://igraph.org/r/))
+
+-   Highlight different aspects of the distribution and sources of power
+
+## Other types of networks
+
+-   Two mode networks
+
+-   Mutliplexity
+
+-   Dynamic
+
+-   Spatial
+
+
+See also @light2020oxford
+
+## References

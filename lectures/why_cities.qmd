@@ -1,13 +1,12 @@
 ---
-title: "Cities, a very very very brief introduction"
-author: author: |
+title: "Cities, a very very brief introduction"
+author: |
   | 
   | Emmanouil Tranos
   |
   | University of Bristol, Alan Turing Institute 
-  | e.tranos@bristol.ac.uk, [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
-format: 
-  revealjs
+  | [e.tranos@bristol.ac.uk](mailto:e.tranos@bristol.ac.uk), [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+format: revealjs
 editor: visual
 bibliography: references.bib
 ---
