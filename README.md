@@ -35,13 +35,18 @@ Network modelling???
 - @kolaczyk2020statistical Ch 6
 - ERGM and other
 - link prediction 7
+- https://statnet.org/
+
+Spatial networks?
+
+Economic complexity??
 
 7. Networks small scale
 
    - Barthelemy 2018 Ch. 7
 
 8. Lecture on spatial interactions
-2012 paper
+Bettencourt 2021 8.1.3 for Maximum entropym radiation and a variant of urban scaling
 
 9. Practical on spatial interaction modelling 
 @kolaczyk2020statistical Ch 9

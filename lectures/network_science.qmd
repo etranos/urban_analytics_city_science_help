@@ -1,0 +1,423 @@
+---
+title: "Network science, urban laws and scaling"
+author: |
+  | 
+  | Emmanouil Tranos
+  |
+  | University of Bristol, Alan Turing Institute 
+  | [e.tranos@bristol.ac.uk](mailto:e.tranos@bristol.ac.uk), [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+format: revealjs
+editor: visual
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| results: false
+#| include: false
+
+library(rprojroot)
+library(DiagrammeR)
+
+# This is the project path
+path <- find_rstudio_root_file()
+images.path <- paste0(path, "/images/")
+```
+
+## Network Science: The Evolution of a 'New' Science
+
+-   Not really new
+
+-   Graph Theory in the 18th century
+
+-   Leonhard Euler's work on small graphs
+
+-   High degree of regularity: similar degree centrality among different nodes
+
+## Regular graphs
+
+```{r, fig.height=5}
+grViz("
+graph {
+
+# a graph statement
+graph [layout = circo,
+      rankdir = RL]
+
+# a node statement
+node [shape = circle,
+      style = filled,
+      color = grey,
+      fillcolor = orange];
+nodesep=4
+A; B; C; D; E; F; G; H;
+
+# an edge statement
+edge [color = grey]
+
+A -- B
+B -- C
+C -- D
+D -- E
+E -- F
+F -- G
+G -- H
+H -- A
+A -- D
+H -- E
+B -- G
+C -- F
+}")
+```
+
+## 1st milestone: Random networks (RN)
+
+-   20th Century: advances in mathematics and statistics  algorithmic network analysis
+
+-   @erdHos1960evolution
+
+-   Large scale networks with no obvious structure
+
+-   Nodes degree follows a Poisson distribution: similar degree, close to the average degree <k>, rare exceptions
+
+-   Representative of real world network?
+
+## 1st milestone: Random networks (RN)
+
+![](images/randomness.png)
+
+<small> Source: @watts1998collective </small>
+
+## 1st milestone: Random networks (RN)
+
+![](images/k.png){width="50%"}
+
+<small> Source: @torres2009isoenzimas </small>
+
+## Networks become important...
+
+-   ... in different fields, from social science to biology
+
+-   Digitization of data in many different fields + large databases ➔ real world systems as networks
+
+-   Advances in computer science and in computing
+
+-   Looseness between different disciplinary boundaries
+
+-   Reductionist approaches lose ground in favor of holistic research approaches, which try to understand the system as a whole
+
+## 2nd milestone: Small-worlds
+
+-   Small world effect
+
+-   [Milgram's six degrees of separation (1967)](https://en.wikipedia.org/wiki/Small-world_experiment)
+
+-   Bacon number
+
+-   Short average distances, enabling nodes to reach each other within a few steps
+
+-   Characteristic of numerous real world networks
+
+-   Structural characteristic rather than an organizing principle
+
+-   Even RN networks are characterized by short average distances
+
+## 2nd milestone: Small-worlds
+
+-   @watts1998collective Small-world (SW) model
+
+-   Coexistence of short average distance with high clustering coefficient
+
+-   SW networks are located between regular and random networks:
+
+-   Highly clustered like regular lattices
+
+-   Small distances like random networks
+
+-   Node degree distribution is quite similar with the RN and decays exponentially
+
+## 2nd milestone: Small-worlds
+
+-   A set of intensively interconnected local clusters, which gain global connectivity via a few links, which span the entire network linking distant clusters
+
+-   Nodes in SW networks benefit from the high local connectivity and easy distant communication with remote clusters using the intra-cluster links
+
+-   Probability of finding a highly connected node decreases exponentially as highly connected nodes are practically absent in RN and SW models
+
+## 2nd milestone: Small-worlds
+
+![](images/randomness.png)
+
+<small> Source: @watts1998collective </small>
+
+## 2nd milestone: Small-worlds
+
+**Pros and cons**
+
+-   Social capital (bridging and bonding)
+
+-   Disease spread
+
+-   Real world examples?
+
+## 3rd milestone: Scale-free (SF) networks
+
+<small>
+
+-   @barabasi1999emergence
+
+-   Very few super connected nodes and a vast majority of less connected nodes
+
+-   SF: nodes degree distribution follows a power law distribution regardless the scale of observation
+
+-   2 main formation mechanisms:
+
+    -   **growth**; expansion of networks over time
+
+    -   **preferential attachment**: growth is not equally dispersed across the nodes; highly connected nodes are more likely to receive new links than the lower degree nodes
+
+</small>
+
+## 3rd milestone: Scale-free (SF) networks
+
+-   An initial difference in the connectivity between two nodes will increase further as the network grows
+
+-   This is a cumulative --- *rich get richer* --- process
+
+-   The probability $P(k)$ that a node has a degree $k$ decays following a power function, with usually $2 < \gamma < 3$
+
+    $P(k)≈𝑘^{−\gamma}$
+
+-   Power laws in networks are related with the existence of **both of the above two mechanisms**
+
+-   Later versions of SF models included more realistic options for the network growth
+
+## 3rd milestone: Scale-free (SF) networks
+
+![](images/sf_exp.png)
+
+<small> Source: @albert2000error </small>
+
+## 3rd milestone: Scale-free (SF) networks
+
+![](images/sf.png)
+
+## 3rd milestone: Scale-free (SF) networks
+
+And finally the power law...
+
+![](images/powerlaw.png)
+
+## 3rd milestone: Scale-free (SF) networks
+
+**Pros and cons?**
+
+-   Efficiency
+
+-   Resilience
+
+-   Disease spread prevention
+
+-   Vulnerability towards targeted attacks
+
+-   Real world examples?
+
+## Network Science: a summary
+
+-   Both RN and SW have short average distances
+
+-   RN cannot be included in SW because they lack the high clustering coefficient
+
+-   SF networks share the short average distance and the high cluster coefficient of SW ones, but the SW are not characterized by the scale-free distribution
+
+-   All scale free networks display small world properties, while all small-world networks are not necessarily scale free
+
+## Network science: An epistemological discussion
+
+**1. Complexity Science**
+
+-   Most studies in the network science domain have a starting point in statistical physics
+
+-   Stochastic approaches
+
+-   Underlying probability model which usually follows a power law
+
+-   *Main objective:* identification of the underlying mechanisms using generative modeling and simulation
+
+-   *Potential risk:* the probability model might not follow a power law mechanism, which is a common assumption
+
+## Network science: An epistemological discussion
+
+**2. Social Network Analysis**
+
+-   Sociology and graph theory
+
+-   Focus on social networks
+
+-   Extensive utilization of network metrics
+
+## Network science: An epistemological discussion
+
+**3. Geography and Urban Analytics**
+
+-   Softer' approaches
+
+-   Ex-post empirical modeling for identifying characteristics of theoretical network models in real world networks
+
+-   Global and local network statistics
+
+-   Use of network measures in mainstream statistical modeling
+
+-   Empirical verification of the functions that better explain the node degree distribution (power vs. exponential functions)
+
+-   Spatial networks, but also dynamic networks
+
+# Scaling
+
+## What is scale and scaling
+
+::: incremental
+-   Scale in geography
+
+-   Scale in math:
+
+    -   $y(x_i)$ a function of $x_i$ where $i$ is a spatial unit
+
+    -   If we scale $x$ by some scalar $\lambda$, **the function scales** if its scaled value is proportional to its previous value: $y(\lambda x_i) \propto y(x_i)$
+
+    -   $y(x_i) = x_i^a$
+
+    -   $y(\lambda x_i) = (\lambda x_i)^a = \lambda^a x_i^a = \lambda^a y(x_i)$
+
+    -   ➔ Power law
+:::
+
+## Laws of urban scaling
+
+-   Regularities
+
+-   Quantitative revolution post WW2
+
+-   Cultural turn
+
+-   ... today ...
+
+::: footer
+Based on @batty2013new. See also @bettencourt2021introduction
+:::
+
+<!-- central place theory and urban hierarchy, Christaller -->
+
+<!-- Tobler's two laws: and then gravity. And then gravity as urban scaling -->
+
+<!-- Gibrat's law: he average growth rates of dif ferent cities are the same in an urban system. ?? nope -->
+
+<!-- Zipf's law -->
+
+## Metcalfe's law / Moore's law
+
+-   As cities grow...
+
+-   ... the number of potential connections increases as the square of population.
+
+-   $C = p(p-1)/2 \propto p^2$
+
+## von Thunen's law
+
+-   As cities grow in size ...
+
+-   land values decline non-linearly from the centre
+
+![](images/vonthunen2.png)
+
+<small><small>Source: @coe2019economic</small></small>
+
+## Law of gravitation / Tobler's law
+
+-   As cities grow...
+
+-   .. interactions between them decline with increasing distance
+
+-   Newton law of gravitation
+
+![](images/NewtonsLawOfUniversalGravitation.svg)
+
+<small><small>Source: I, Dennis Nilsson, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=3455682 </small></small>
+
+## Zipf law
+
+-   As cities get larger...
+
+-   ... there are less of them
+
+-   Regularity in the distribution of cities within a country
+
+-   Empirical observation and quantification
+
+-   Hierarchical urban systems:
+
+    -   one/a few big cities
+
+    -   more medium size cities
+
+    -   large number of very small cities
+
+## Zipf law
+
+quatro
+
+## Zipf law
+
+![](images/zipf_fr.png)
+
+## Zipf law
+
+::: columns
+::: {.column width="60%"}
+![](images/us_cities.png){width="70%"}
+
+<small><small>Source: @o2012urban </small></small>
+:::
+
+::: {.column width="40%"}
+$pop_i = pop_d r_i^{-a}$
+
+if $a=1$: Zipf law
+
+$pop_i = pop_d / r_i$
+:::
+:::
+
+## Zipf law
+
+::: columns
+::: {.column width="60%"}
+![](images/uk_cities.png){width="70%"}
+:::
+
+::: {.column width="40%"}
+$pop_i = pop_d r_i^{-a}$
+
+if $a=1$: Zipf law
+
+$pop_i = pop_d / r_i$
+:::
+:::
+
+## Zipf law
+
+-   Primary cities above what a Zipf law would predict
+
+-   Newly industrialised countries
+
+-   No overall consensus why the rank-size rule holds
+
+-   Statistical regularity or an underpinning micro-economic process?
+
+
+## Epilogue
+
+Cities, of course, do not really have their own dynamics; they depend on decisions made by people, corporations, governments, and others. The aggregate statistics of all their decisions will therefore emerge as key and provide another con- nection to the uses of information in urban science. @bettencourt2021introduction
+
+## References
