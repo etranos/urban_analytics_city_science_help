@@ -1,0 +1,333 @@
+---
+title: "Untitled"
+author: "Emmanouil Tranos"
+date: "2022-09-10"
+output: html_document
+---
+
+-   Diversity and productivity of cities (Bettencourt)
+    -   origins of diversity and heterogeneity 
+    -   measuring diversity: species richness
+    -   HHI vs. entropy???
+    
+-   Clustering, **TODO: map clusters**
+
+-   Form and function
+
+-   Economic complexity
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(REAT)
+library(entropy)
+
+library(cluster)
+library(factoextra)
+
+
+options(scipen=999)
+
+```
+https://data.london.gov.uk/dataset/directory-of-london-businesses
+
+```{r}
+a <- read_csv("businesses-in-london.csv")
+names(a)
+
+E09000012 <- a %>% filter(oslaua=="E09000012") %>% 
+  group_by(SICCode.SicText_1) %>% 
+  summarise(n = n()) %>% 
+  mutate(total = sum(n),
+         freq = n / total) %>% 
+  arrange(-n)
+
+E09000023 <- a %>% filter(oslaua=="E09000023") %>% 
+  group_by(SICCode.SicText_1) %>% 
+  summarise(n = n()) %>% 
+  mutate(total = sum(n),
+         freq = n / total) %>% 
+  arrange(-n)
+
+theil(E09000012$n, E09000012$total)
+theil(E09000023$n, E09000023$total)
+
+herf(E09000012$n)
+herf(E09000023$n)
+
+gini(E09000012$n)
+gini(E09000023$n)
+#a %>% filter(RegAddress.Country=="INDIA")
+
+help<-a %>% filter(SICCode.SicText_1!="None Supplied") %>% 
+  group_by(oslaua, SICCode.SicText_1) %>% 
+  summarise(n = n()) %>% 
+  mutate(total = sum(n),
+         freq = n / total) %>% 
+  # select(-c(total,freq)) %>% 
+  # diversity(as.data.frame(help))
+  #arrange(oslaua,-n) %>% 
+  group_by(oslaua) %>% 
+  summarise(richness = n_distinct(SICCode.SicText_1),
+            entropy = entropy(freq, method = "ML"),
+            #gini = gini(n),
+            #theil = theil(n, total),
+            herf = herf(n)) %>% 
+  arrange(-herf) %>% 
+  cor(c('richness','gini', 'herf', 'theil', 'entropy'))
+
+# Local authority names
+names<-read_csv("la_names.csv", col_names = F)
+
+help %>% left_join(names, by = c("oslaua"="X1"))
+```
+
+- Business richness, DS(N), the total number of different types in a given city
+- Theil inequality index
+- Gini
+- herf (1/n<herf<1)
+
+## Clustering
+
+https://bradleyboehmke.github.io/HOML/kmeans.html
+
+classification of observations into groups
+
+computing the distance or the (dis)similarity between each pair of observations which form a distance or dissimilarity or matrix
+
+## Hierarchical clustering
+Hierarchical clustering can be divided into two main types:
+
+Agglomerative clustering: Commonly referred to as AGNES (AGglomerative NESting) works in a bottom-up manner. That is, each observation is initially considered as a single-element cluster (leaf). At each step of the algorithm, the two clusters that are the most similar are combined into a new bigger cluster (nodes). This procedure is iterated until all points are a member of just one single big cluster (root) (see Figure 21.2). The result is a tree which can be displayed using a dendrogram.
+Divisive hierarchical clustering: Commonly referred to as DIANA (DIvise ANAlysis) works in a top-down manner. DIANA is like the reverse of AGNES. It begins with the root, in which all observations are included in a single cluster. At each step of the algorithm, the current cluster is split into two clusters that are considered most heterogeneous. The process is iterated until all observations are in their own cluster.
+
+```{r}
+#set.seed(123)
+
+a_ <- a %>% filter(SICCode.SicText_1!="None Supplied") %>% 
+  group_by(oslaua, SICCode.SicText_1) %>% 
+  summarise(n = n()) %>% 
+  mutate(total = sum(n),
+         freq = n / total) %>% 
+  arrange(oslaua,-n) %>%
+  select(-n, -total) %>% 
+  pivot_wider(names_from = SICCode.SicText_1, values_from = freq) %>% 
+  replace(is.na(.), 0)
+  
+d <- dist(a_)
+
+l <- a %>% distinct(oslaua) %>% arrange(oslaua)
+
+hclust = hclust(d)
+plot(hclust)
+plot(hclust, cex = 0.6, hang = -1)
+plot(hclust, hang=-1, labels=l$oslaua, main='Default from hclust') #hang The fraction of the plot height by which labels should hang below the rest of the plot. A negative value will cause the labels to hang down from 0.
+
+```
+
+This graph gives us an approximation between the distance between any two movies. To find this distance we find the first location, from top to bottom, where these movies split into two different groups. The height of this location is the distance between these two groups. So, for example, the distance between the three Star Wars movies is 8 or less, while the distance between Raiders of the Lost of Ark and Silence of the Lambs is about 17.
+
+It by no means implies that observation 9 & 2 are close to one another.
+
+```{r}
+hclust2 <- agnes(d)
+hclust2$ac
+
+# methods to assess
+m <- c( "average", "single", "complete", "ward")
+names(m) <- c( "average", "single", "complete", "ward")
+
+# function to compute coefficient
+ac <- function(x) {
+  agnes(d, method = x)$ac
+}
+
+# get agglomerative coefficient for each linkage method
+purrr::map_dbl(m, ac)
+##   average    single  complete      ward 
+## 0.9139303 0.8712890 0.9267750 0.9766577
+
+```
+
+Determining optimal clusters
+
+```{r}
+p1 <- fviz_nbclust(a_, FUN = hcut, method = "wss", 
+                   k.max = 10) +
+  ggtitle("(A) Elbow method")
+p2 <- fviz_nbclust(a_, FUN = hcut, method = "silhouette", 
+                   k.max = 10) +
+  ggtitle("(B) Silhouette method")
+p3 <- fviz_nbclust(a_[-1], FUN = hcut, method = "gap_stat", 
+                   k.max = 10) +
+  ggtitle("(C) Gap statistic")
+
+# Display plots side by side
+gridExtra::grid.arrange(p1, p2, p3, nrow = 1)
+
+```
+
+dendrograms
+
+```{r}
+hc5 <- hclust(d, method = "ward.D2" )
+dend_plot <- fviz_dend(hclust)
+dend_data <- attr(dend_plot, "dendrogram")
+dend_cuts <- cut(dend_data, h = .15)
+fviz_dend(dend_cuts$lower[[2]])
+
+sub_grp <- cutree(hclust, k = 2)
+table(sub_grp)
+
+fviz_dend(
+  hclust,
+  k = 2,
+  horiz = TRUE,
+  rect = TRUE,
+  rect_fill = TRUE,
+  rect_border = "jco",
+  k_colors = "jco",
+  cex = 0.1
+)
+```
+
+## *K*means Clustering
+
+the total within-cluster variation is minimized
+
+he algorithm starts by randomly selecting  
+k
+  observations from the data set to serve as the initial centers for the clusters (i.e., centroids). Next, each of the remaining observations are assigned to its closest centroid, where closest is defined using the distance between the object and the cluster mean (based on the selected distance measure). This is called the cluster assignment step.
+
+Next, the algorithm computes the new center (i.e., mean value) of each cluster. The term centroid update is used to define this step. Now that the centers have been recalculated, every observation is checked again to see if it might be closer to a different cluster. All the objects are reassigned again using the updated cluster means. The cluster assignment and centroid update steps are iteratively repeated until the cluster assignments stop changing (i.e., when convergence is achieved). That is, the clusters formed in the current iteration are the same as those obtained in the previous iteration.
+
+```{r}
+mnist <- dslabs::read_mnist()
+
+url <- "https://koalaverse.github.io/homlr/data/my_basket.csv"
+my_basket <- readr::read_csv(url)
+
+features <- mnist$train$images
+mnist_clustering <- kmeans(features, centers = 10, nstart = 10)
+
+kclust = kmeans(a_[,-1], centers = 10, nstart = 10)
+str(kclust)
+
+```
+
+`centers` is 10 x 1036: 1036 is the number of SIC codes. 
+
+rule of thumb is  
+
+$$k = \sqrt{n/2}$$
+
+$n$ is the number of observations to cluster
+
+```{r}
+fviz_nbclust(
+  a_[,-1], 
+  kmeans, 
+  k.max = 25,
+  method = "wss"
+)
+
+```
+
+
+## OSM
+
+```{r}
+# https://dominicroye.github.io/en/2018/accessing-openstreetmap-data-with-r/
+https://cran.r-project.org/web/packages/osmdata/vignettes/osmdata.html
+
+if(!require("osmdata")) install.packages("osmdata")
+if(!require("tidyverse")) install.packages("tidyverse")
+if(!require("sf")) install.packages("sf")
+if(!require("ggmap")) install.packages("ggmap")
+
+library(tidyverse)
+library(osmdata)
+library(sf)
+library(ggmap)
+
+## Amenities
+q <- getbb("Bristol")%>%
+  opq()%>%
+  add_osm_feature("amenity", "cafe")
+
+str(q)
+
+cinema <- osmdata_sf(q)
+cinema
+
+map <- get_map(getbb("Bristol"),maptype = "toner-background")
+
+ggmap(map)+
+  geom_sf(data=cinema$osm_points,
+          inherit.aes =FALSE,
+          colour="#238443",
+          fill="#004529",
+          alpha=.5,
+          size=4,
+          shape=21)+
+  labs(x="",y="")
+
+available_tags("amenity")
+available_features()
+available_tags("shop")
+
+test <- cinema$osm_points[!is.na(cinema$osm_points$name),]
+head(test)
+dim(test)
+dim(cinema$osm_points)
+
+
+## Historic
+historic <- getbb("Marseille")%>%
+  opq()%>%
+  add_osm_feature("historic")
+
+str(historic)
+
+historic.sp <- osmdata_sf(historic)
+historic.sp
+
+krak_map <- get_map(getbb("Marseille"),maptype = "toner-background")
+
+ggmap(krak_map)+
+  geom_sf(data=historic.sp$osm_points,
+          inherit.aes =FALSE,
+          colour="#238443",
+          fill="#004529",
+          alpha=.5,
+          size=4,
+          shape=21)+
+  labs(x="",y="")
+
+test <- historic.sp$osm_points[!is.na(historic.sp$osm_points$name),]
+head(test)
+dim(test)
+dim(historic.sp$osm_points)
+```
+
+```{r}
+library(spDataLarge)
+
+shops = map("Bristol", function(x) {
+  message("Downloading shops of: ", x, "\n")
+  # give the server a bit time
+  Sys.sleep(sample(seq(5, 10, 0.1), 1))
+  query = opq(x) %>%
+    add_osm_feature(key = "shop")
+  points = osmdata_sf(query)
+  # request the same data again if nothing has been downloaded
+  iter = 2
+  while (nrow(points$osm_points) == 0 & iter > 0) {
+    points = osmdata_sf(query)
+    iter = iter - 1
+  }
+  points = st_set_crs(points$osm_points, 4326)
+})
+```

@@ -1,0 +1,76 @@
+---
+title: "Network models in practice"
+author: |
+  | 
+  | Emmanouil Tranos
+  |
+  | University of Bristol, Alan Turing Institute 
+  | [e.tranos@bristol.ac.uk](mailto:e.tranos@bristol.ac.uk), [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+  | 
+  | 
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+bibliography: "`r system('kpsewhich ../lectures/references.bib', intern = TRUE)`"
+---
+
+
+```{r setup}
+library(tidyverse)
+library(igraph)
+
+library(sand)       
+library(igraphdata)
+```
+
+
+```{r}
+data(karate)
+```
+
+A histogram of degree centrality with base `R`
+
+```{r}
+hist(degree(karate), col="pink", xlab="Vertex degree", ylab="Frequency", main="Degree cetrality distribution")
+```
+
+A histogram of weighted degree centrality (aka strength) with base `R`
+
+```{r}
+hist(strength(karate), col="pink", xlab="Vertex weighted degree", ylab="Frequency", main="Weighted degree cetrality distribution")
+```
+
+A histogram of weighted degree centrality using `dplyr` and `ggplot`
+
+```{r}
+strength(karate) %>% 
+  as_tibble() %>% 
+  ggplot(aes(x=value)) +
+  geom_histogram(color="black", 
+                 fill="pink", 
+                 binwidth = 5, 
+                 boundary = 0) +
+  xlab("Vertex weighted degree") +
+  ylab("Frequency") + 
+  ggtitle("Weighted degree cetrality distribution") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(breaks=c(0,2,4,6,8,10))
+```
+
+Degree distribution
+
+```{r}
+degree_distribution(karate)[-1] %>% 
+  #plot(log="xy")
+  plot(xlab="Vertex degree", ylab="Relative frequency", main="Degree cetrality distribution")
+```
+
+Degree distribution in log-log
+
+```{r}
+degree_distribution(karate)[-1] %>% 
+  #plot(log="xy")
+  plot(xlab="Logged vertex degree", ylab="Logged relative frequency", main="Degree cetrality distribution in log-log", log = "xy")
+```

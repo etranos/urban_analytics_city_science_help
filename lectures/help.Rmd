@@ -40,3 +40,146 @@ Third, dashboards are reductive, atomizing complex, contingent relationships int
 -   While each municipality could invest in a particular smart technology, it only becomes cost-effective and its utility and value realized when it is operated at scale. Each of the 101 municipalities in Metro Boston investing in its own intelligent transport system or city operating system or having its own bikeshare scheme that is not interoperable across the metro-region, for example, would make little sense. Metro-wide adoption, at a sufficient scale of economy, can only be achieved through collaborative procurement, which is difficult to realize in practice, particularly given the structural differences between the municipalities, many of which have a strong rural character despite being in the metro area.
 
 -   In the past, key infrastructures and services -- water, sewage, public transit, main roads -- were extracted from municipalities and placed into regional entities that spanned them (e.g., in the Metro Boston case, MBTA, MWRA). Such extraction would make sense with respect to many new digital, data-driven infrastructures and services. However, creating new regional agencies is politically challenging
+
+
+## stuff from @kolaczyk2020statistical
+
+```{r}
+
+library(sand)
+data(karate)
+
+hist(degree(karate), col="lightblue", xlim=c(0,50), xlab="Vertex Degree", ylab="Frequency", main="")
+hist(strength(karate), col="pink", xlab="Vertex Strength", ylab="Frequency", main="")
+
+strength(karate) %>% 
+  as_tibble() %>% 
+  ggplot(aes(x=value)) +
+  geom_histogram(color="black", 
+                 fill="pink", 
+                 binwidth = 5, 
+                 boundary = 0) +
+  xlab("Weighted degree centrality") +
+  ylab("Frequency") + 
+  ggtitle("Weighted degree distribution") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(breaks=c(0,2,4,6,8,10))
+
+degree_distribution(karate)[-1] %>% 
+  #plot(log="xy")
+  plot()
+```
+
+
+```{r}
+library(igraphdata)
+data(yeast)
+
+d.yeast <- degree(yeast)
+hist(d.yeast,col="blue", xlab="Degree", ylab="Frequency", main="Degree Distribution")
+
+
+dd.yeast <- degree_distribution(yeast)
+plot(dd.yeast, log = "xy")
+
+d <- 1:max(d.yeast)-1
+ind <- (dd.yeast != 0)
+plot(d[ind], dd.yeast[ind], log="xy", 
+     col="blue", 
+     xlab=c("Log-Degree"), ylab=c("Log-Intensity"),
+     main="Log-Log Degree Distribution")
+
+a.nn.deg.yeast <- knn(yeast,V(yeast))$knn
+plot(d.yeast, a.nn.deg.yeast, log="xy",
+     col="goldenrod", xlab=c("Log Vertex Degree"),
+     ylab=c("Log Average Neighbor Degree"))
+```
+
+### Random networks
+
+```{r}
+library(sand)
+set.seed(42)
+g.er <- sample_gnp(500, 0.02)
+plot(g.er, layout=layout_in_circle, vertex.label=NA)
+
+
+hist(degree(g.er), col="lightblue", xlab="Degree", ylab="Frequency", main="")
+
+
+d.g.er <- degree(g.er)
+hist(d.g.er,col="blue", xlab="Degree", ylab="Frequency", main="Degree Distribution")
+
+
+dd.g.er <- degree_distribution(g.er)
+d <- 1:max(d.g.er)-1
+ind <- (dd.g.er != 0)
+plot(d[ind], dd.g.er[ind], log="xy", col="blue", 
+     xlab=c("Log-Degree"), ylab=c("Log-Intensity"),
+     main="Log-Log Degree Distribution") 
+
+```
+
+### Small world networks
+
+```{r}
+g.ws <- sample_smallworld(1, 500, 5, 0.05)
+plot(g.ws, layout=layout_in_circle, vertex.label=NA)
+
+hist(degree(g.ws), col="lightblue", xlab="Degree", ylab="Frequency", main="")
+
+steps <- seq(-4, -0.5, 0.1)
+len <- length(steps)
+cl <- numeric(len)
+apl <- numeric(len)
+ntrials <- 100
+
+for (i in (1:len)) {
+cltemp <- numeric(ntrials)
+ apltemp <- numeric(ntrials)
+for (j in (1:ntrials)) {
+g <- sample_smallworld(1, 1000, 10, 10^steps[i])
+cltemp[j] <- transitivity(g)
+apltemp[j] <- mean_distance(g)
+}
+cl[i] <- mean(cltemp)
+apl[i] <- mean(apltemp)
+}
+
+# The results shown in Fig. 5.4, where approximate expected values for normalized
+# versions of average path length and clustering coefficient are plotted, indicate that
+# over a substantial range of p the network exhibits small average distance while
+# maintaining a high level of clustering.
+
+plot(steps, cl/max(cl), ylim=c(0, 1), lwd=3, type="l",
+     col="blue", xlab=expression(log[10](p)),
+     ylab="Clustering and Average Path Length")
+lines(steps, apl/max(apl), lwd=3, col="red")
+
+
+```
+
+### Scale free networks
+
+```{r}
+set.seed(42)
+
+g.ba <- sample_pa(500, directed=FALSE)
+plot(g.ba, layout=layout_in_circle, vertex.label=NA)
+
+# Note that the edges are spread among vertex pairs in a decidedly less uniform manner
+# than in the classical random graph we saw in Fig. 5.1. And, in fact, there appear to
+# be vertices of especially high degree—so-called ‘hub’ vertices.
+# Examination of the degree distribution (also shown in Fig. 5.5)
+
+
+hist(degree(g.ba), col="lightblue", xlab="Degree", ylab="Frequency", main="")
+
+dd.g.ba <- degree_distribution(g.ba, cumulative = F)
+dd.g.ba <- dd.g.ba[-1]
+
+plot(dd.g.ba, log = "xy")
+
+degree_distribution(g.ba)[-1] %>% 
+  plot(log="xy")
+```

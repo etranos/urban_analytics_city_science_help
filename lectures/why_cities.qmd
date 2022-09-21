@@ -6,7 +6,9 @@ author: |
   |
   | University of Bristol, Alan Turing Institute 
   | [e.tranos@bristol.ac.uk](mailto:e.tranos@bristol.ac.uk), [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
-format: revealjs
+format:
+  revealjs:
+    embed-resources: true
 editor: visual
 bibliography: references.bib
 ---
@@ -109,7 +111,7 @@ Source of:
 -   Urban science, city science, urban analytics, urban geography, geographic data science, urban data science, complexity science, TheNextBigThing
 -   Have a look: @urbananalytics
 
-## Why do cities exist?"
+## Why do cities exist?
 
 -   An economist's answer: to *economise*!
 -   Because of economies of scale and agglomeration economies
@@ -179,7 +181,7 @@ How do they affect space?
 
 ## Agglomeration economies
 
--   AKA External economies of scale
+-   AKA *external economies of scale*
 -   External to the firm
 -   **Very important for cities**
 -   Two types:
@@ -189,7 +191,7 @@ How do they affect space?
 ## Localization Economies
 
 -   Within a group of firms of the same industry
--   clustered together at the same place
+-   Clustered together at the same place
 -   Why?
     -   Information exchange
     -   Labour mobility
@@ -280,7 +282,7 @@ In other words, collocation of people and firms increases efficiency.
 
 ::: r-fit-text
 |                    |                                                                                                                        |
-|------------------|------------------------------------------------------|
+|---------------------|---------------------------------------------------|
 | Heterogeneity      | Differences in information, profession, culture, race, ethnicity, and economic status                                  |
 | Interconnectivity  | Interdependence between people, organizations, and infrastructure in networks                                          |
 | Scaling            | Self-similar economies of scale per capita in material infrastructure and increasing returns to socioeconomic activity |
@@ -292,8 +294,11 @@ In other words, collocation of people and firms increases efficiency.
 
 ## Cities as complex system: scale
 
-```{r}
+<center>
+
+```{r, echo=FALSE, results='asis'}
 library(DiagrammeR)
+
 mermaid("
 graph TB
 A[Individual] --> B[Neighbourhood]
@@ -301,6 +306,8 @@ B --> C[City]
 C --> D[Urban systems]
 ")
 ```
+
+</center>
 
 ## Urban models: looking into cities
 

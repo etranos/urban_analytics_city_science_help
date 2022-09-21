@@ -1,0 +1,495 @@
+---
+title: "Diversity in cities"
+author: |
+  | 
+  | Emmanouil Tranos
+  |
+  | University of Bristol, Alan Turing Institute 
+  | [e.tranos@bristol.ac.uk](mailto:e.tranos@bristol.ac.uk), [\@EmmanouilTranos](https://twitter.com/EmmanouilTranos),  [etranos.info](https://etranos.info/)
+format: revealjs
+output:
+  html_document:
+    code_folding: hide
+editor: visual
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| echo: true
+#| results: false
+#| include: false
+
+library(rprojroot)
+
+# This is the project path
+path <- find_rstudio_root_file()
+images.path <- paste0(path, "/images/")
+```
+
+## Economic diversity
+
+-   Production, i.e. firms
+
+-   Consumption, i.e. product variety
+
+-   Labour pool, i.e. skills in labour market
+
+In general is *a good thing* for:
+
+-   urban economies
+
+-   productivity
+
+-   urban and industrial agglomeration
+
+## Opposing forces
+
+-   Within-sector or Marshall--Arrow--Romer (MAR) spillovers,
+
+-   Between-sector or Jacobs spillovers
+
+-   Large empirical literature trying to identify the write ratio (e.g. @saviotti2008export; @caragliu2016both)
+
+-   MAR externalities (or spillovers): good for productivity and short-term growth
+
+-   Jacobean externalities: good for innovation and long-term growth
+
+## Opposing forces
+
+Using more clear econ terminology [@fujita1989urban]:
+
+-   Diverse cities (heterogeneous agglomerations) enjoy economies of scope
+
+-   Homogeneous agglomeration enjoy increasing returns from economies of scale
+
+## On the ground
+
+-   Ambiguous concepts
+
+-   Abundance, difference or number of, but also the degrees of richness, concentration or evenness [@yuo2021environmental]
+
+-   Different ways to measure [@bettencourt2021introduction]
+
+## Spieces richness...
+
+-   ... aka variety
+
+-   $\sum_{i}p_{i}^0$
+
+-   $p_i$ is the proportion of data points in the $i$th category
+
+**Interpretation:**
+
+-   Plurality
+
+-   Availability of options
+
+## Shannon entropy
+
+-   $H = -\sum_{i=1}^n p_{i} \ln{p_{i}}$
+
+-   $n$ is the number of total categories
+
+-   $p_i$ is the proportion of data points in the $i$th category
+
+-   Probably the most common diversity index.
+
+-   **Interpretation:**
+
+    -   If one category dominates ➔ less surprise ➔ low entropy
+
+    -   No category dominates ➔ more surprise ➔ high entropy
+
+## Herfindahl-Hirschman index
+
+-   $HHI = \sum_{i}(p_{i}^2)$
+
+-   $p_i$ is the proportion of data points in the $i$th category
+
+-   Concentration of the market.
+
+-   **Interpretation:**
+
+    -   $1/n \leq HHI \leq 1$
+
+    -   Two scenarios:
+
+```{r, echo=TRUE}
+HHI_1 = .8^2 + .05^2 + .05^2 + .1^2
+HHI_1
+
+HHI_2 = .25^2 + .25^2 + .25^2 + .25^2
+HHI_2
+```
+
+## Herfindahl-Hirschman index
+
+-   Caution: alternative specification
+
+-   $HHI = 1- \sum_{i}(p_{i}^2)$
+
+# Examples
+
+------------------------------------------------------------------------
+
+![](images/paper_example1.png)
+
+------------------------------------------------------------------------
+
+![](images/paper_example2.png)
+
+## Relatedness
+
+-   *Relatedness* spans the continuum between MAR and Jacobs [@hidalgo2021economic]
+
+-   Related activities are neither exactly the same nor completely different [@frenken2007related; @boschma2012technological]
+
+-   Why? Because:
+
+    -   identical activities compete for for customers and resources,
+
+    -   no learning between very dissimilar economicactivities
+
+## Relatedness
+
+-   Absorptive capacity: a firm's capacity to absorb new knowledge depends on its prior level of related knowledge [@cohen1990absorptive]
+
+## Economic complexity
+
+-   Large scale fine-grained data on economic activities
+
+-   Learn about abstract factors of production and the way they combine into outputs
+
+-   Dimensionality reduction techniques to data on the geography of activities, e.g. employment by industry or patents by technology.
+
+-   Machine learning and network techniques to predict and explain the economic trajectories of countries, cities and regions.
+
+For a review, check @hidalgo2021economic and @balland2022new.
+
+## Measuring diversity
+
+<iframe src="https://www.gov.uk/government/organisations/companies-house" width="800" height="600" frameBorder="0" scrolling="yes">
+
+</iframe>
+
+## Measuring diversity
+
+-   Go to [data.london.gov.uk](https://data.london.gov.uk/dataset/directory-of-london-businesses)
+
+-   Download and and save locally the `Businesses-in-London.csv`
+
+-   Make sure you know the file location!
+
+-   We will use the `REAT` and `entropy` packages. Check what these packages do [here](https://cran.r-project.org/web/packages/REAT/REAT.pdf) and [here](https://cran.r-project.org/web/packages/entropy/entropy.pdf).
+
+-   Install them if needed with `install.packages("packagename")`
+
+## Measuring diversity {.scrollable}
+
+```{r, echo=TRUE}
+
+library(tidyverse)  #for data wrangling
+library(rprojroot)  #for relative paths
+library(REAT)       #for diversity measures
+library(entropy)    #for entropy
+library(cluster)    #for cluster analysis
+library(factoextra) #help functions for clustering 
+library(kableExtra) #for nice html tables
+library(dbscan)     #for HDBSCAL
+
+# This is the project path
+path <- find_rstudio_root_file()
+path.data <- paste0(path, "/data/businesses-in-london.csv")
+
+london.firms <- read_csv(path.data) 
+
+london.firms %>% 
+  filter(SICCode.SicText_1!="None Supplied") %>% 
+  group_by(oslaua, SICCode.SicText_1) %>% 
+  summarise(n = n()) %>% 
+  mutate(total = sum(n),
+         freq = n / total) %>% 
+  group_by(oslaua) %>% 
+  summarise(richness = n_distinct(SICCode.SicText_1),
+            entropy = entropy(freq, method = "ML"),
+            herf = herf(n)) %>% 
+  arrange(-herf) 
+```
+
+## Measuring diversity
+
+::: callout-tip
+You don't know what local authorities these codes refer to. You should download the codes and name and join them with your data from [here](https://geoportal.statistics.gov.uk/documents/c4f647d8a4a648d7b4a1ebf057f8aaa3/about).
+:::
+
+::: callout-tip
+Discuss what we can learn from this exercise.
+
+Can you think of a way to understand how these indices *behave*?
+:::
+
+## Measuring diversity
+
+**TO ADD: CHOROPLETH MAPS**
+
+## Clustering
+
+-   Reducing the dimensions of the observation space
+
+-   Classification of observations into (exclusive) groups
+
+-   Distance or (dis)similarity between each pair of observations to create a distance or dissimilarity or matrix
+
+-   Observations within the same group are as similar as possible
+
+-   Based on @boehmke2019hands available [here](https://bradleyboehmke.github.io/HOML/)
+
+-   Plenty of other resources online and in textbooks
+
+------------------------------------------------------------------------
+
+![Source: [medium.com](https://medium.com/@recrosoft.io/supervised-vs-unsupervised-learning-key-differences-cdd46206cdcb)](images/classical_ml.png)
+
+## Clustering
+
+1.  *K*-means
+
+2.  Hierarchical clustering
+
+## *K*-means
+
+::: r-fit-text
+1.  *k* is the number of clusters and is pre-defined
+
+2.  The algorithm selects *k* random observations (starting centres)
+
+3.  The remaining observations are assigned to the nearest centre
+
+4.  Recalculates the new centres
+
+5.  Re-check cluster assignment
+
+6.  Iterative process to minimise *within-cluster variation* until convergence
+:::
+
+$SS_within = \sum_{k=1}^k W(C_{k}) = \sum_{k=1}^k \sum_{x_i\in C_K}(x_i-\mu_k)^2$
+
+## *K*-means {.scrollable}
+
+First, create an appropriate data frame
+
+```{r, echo = TRUE}
+
+la.sic <- london.firms %>% 
+  filter(SICCode.SicText_1!="None Supplied") %>% # Droping firms which haven't declared SIC code
+  group_by(oslaua, SICCode.SicText_1) %>% 
+  summarise(n = n()) %>% 
+  mutate(total = sum(n),
+         freq = n / total) %>% 
+  arrange(oslaua,-n) %>%
+  select(-n, -total) %>% 
+  pivot_wider(names_from = SICCode.SicText_1, values_from = freq) %>% 
+  replace(is.na(.), 0)
+
+la.sic %>%  
+  select(1:20) %>%  #Select the first 20 columns as there 1037 in total
+  kbl() %>%
+  kable_styling()   #Nice(r) table
+```
+
+## *K*-means {.scrollable}
+
+```{r, echo=TRUE}
+kclust = kmeans(la.sic[,-1], centers = 10, nstart = 10) # be aware of the [,-1]
+str(kclust)
+```
+
+`centers` is 10 x 1036: 1036 is the number of SIC codes.
+
+## Choosing *K*
+
+1.  Rule of thumb: $k = \sqrt{n/2}$
+
+2.  The *elbow* method
+
+    -   Compute k-means clustering for different values of *k*
+
+    -   Calculate $SS_within$
+
+    -   Plot and spot the loction of a bend
+
+## Choosing *K*
+
+```{r, echo=TRUE}
+
+fviz_nbclust(
+  la.sic[,-1], 
+  kmeans, 
+  k.max = 20,
+  method = "wss"
+)
+
+```
+
+## Hierarchical clustering
+
+::: columns
+::: {.column width="60%"}
+![](images/dendrogram.png)
+
+<small> Source: [\@boehmke2019hands](https://bradleyboehmke.github.io/HOML) </small>
+:::
+
+::: {.column width="40%"}
+1.  Agglomerative clustering (AGNES -- AGglomerative NESting)
+
+2.  Divisive hierarchical clustering (DIANA -- DIvise ANAlysis)
+
+Dissimilarity (distance) of observations
+:::
+:::
+
+## Hierarchical clustering
+
+```{r, echo=TRUE}
+
+# distances between observations
+d <- dist(la.sic)
+
+# creates labels for the dendrogam
+l <- london.firms %>% distinct(oslaua) %>% arrange(oslaua)
+
+hclust = hclust(d)
+
+plot(hclust, hang=-1, labels=l$oslaua, main='Default from hclust') 
+#hang: the fraction of the plot height by which labels should hang below the rest of the plot. A negative value will cause the labels to hang down from 0.
+```
+
+## Optimal number of clusters
+
+```{r}
+p1 <- fviz_nbclust(la.sic, FUN = hcut, 
+                   method = "wss", 
+                   k.max = 10) +
+  ggtitle("(A) Elbow method")
+
+p2 <- fviz_nbclust(la.sic, FUN = hcut, 
+                   method = "silhouette", 
+                   k.max = 10) +
+  ggtitle("(B) Silhouette method")
+
+p3 <- fviz_nbclust(la.sic[-1], FUN = hcut, 
+                   method = "gap_stat", 
+                   k.max = 10) +
+  ggtitle("(C) Gap statistic")
+
+# Display plots side by side
+gridExtra::grid.arrange(p1, p2, p3, nrow = 1)
+```
+
+## Optimal number of clusters
+
+::: callout-tip
+Explore what the 2 cluster solution tells us about London?
+:::
+
+```{r, eval=FALSE}
+hc5 <- hclust(d, method = "ward.D2" )
+dend_plot <- fviz_dend(hclust)
+dend_data <- attr(dend_plot, "dendrogram")
+dend_cuts <- cut(dend_data, h = .15)
+fviz_dend(dend_cuts$lower[[2]])
+
+sub_grp <- cutree(hclust, k = 2)
+table(sub_grp)
+
+fviz_dend(
+  hclust,
+  k = 2,
+  horiz = TRUE,
+  rect = TRUE,
+  rect_fill = TRUE,
+  rect_border = "jco",
+  k_colors = "jco",
+  cex = 0.1
+)
+```
+
+## Clusters in space {.scrollable}
+
+-   Create a SIC frequency table
+
+```{r, echo=TRUE}
+
+# This will build an SIC frequency table
+london.firms %>% 
+  group_by(SICCode.SicText_1) %>% 
+  summarise(n=n()) %>% 
+  arrange(-n) %>% 
+  glimpse()
+```
+
+## Clusters in space {.scrollable}
+
+-   Focus on, let's say "70221 - Financial management"
+
+```{r, echo=TRUE}
+london.firms.sample <- london.firms %>% 
+  #filter(SICCode.SicText_1=="70229 - Management consultancy activities other than financial management") %>%
+  #filter(SICCode.SicText_1=="59111 - Motion picture production activities") %>% 
+  filter(SICCode.SicText_1=="70221 - Financial management") %>% 
+  select(oseast1m, osnrth1m) %>% 
+  drop_na() 
+```
+
+## Financial management in London
+
+```{r, echo=TRUE}
+plot(london.firms.sample)
+```
+
+## Clusters in space, *k*-means
+
+```{r, echo=TRUE}
+fviz_nbclust(
+  london.firms.sample, 
+  kmeans, 
+  k.max = 10,
+  method = "wss"
+)
+```
+
+## Clusters in space, *k*-means
+
+```{r, echo=TRUE}
+sp.cluster = kmeans(london.firms.sample, 6) 
+
+plot(london.firms.sample, col = sp.cluster$cluster)
+#points(sp.cluster$centers, col = 1:4, pch = 8, cex = 2)
+```
+
+## Clusters in space, hdbscan
+
+1.  Transform the space according to the density/sparsity
+
+2.  Build the minimum spanning tree of the distance weighted graph
+
+3.  Construct a cluster hierarchy of connected components
+
+4.  Condense the cluster hierarchy based on minimum cluster size
+
+5.  Extract the stable clusters from the condensed tree.
+
+Resources: [SciKit-learn docs](https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html) and [dbscan package](https://cran.r-project.org/web/packages/dbscan/vignettes/hdbscan.html)
+
+## Clusters in space, hdbscan
+
+```{r, echo=TRUE}
+cl <- hdbscan(london.firms.sample, 
+              minPts = 10)         #minimum size of clusters
+
+plot(london.firms.sample, col=cl$cluster+1, pch=20)
+```
+
+## References

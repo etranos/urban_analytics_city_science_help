@@ -1,0 +1,167 @@
+---
+title: "Untitled"
+author: "Emmanouil Tranos"
+date: "2022-09-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Street network analysis has been central to network science since its
+nascence: its mathematical foundation, graph theory, was born in the
+18th century when Leonhard Euler presented his famous Seven Bridges
+of Königsberg problem.
+
+Graphs can
+also have parallel (i.e., multiple) edges between the same two nodes.
+
+network may be thought of as a
+real-world graph
+
+A complex network is one with a
+nontrivial topology (the configuration and structure of its nodes and
+edges) – that is, the topology is neither fully regular nor fully random.
+Most large real-world networks are complex (Newman, 2010). Of
+particular interest to this study are complex spatial networks – that is,
+complex networks with nodes and/or edges embedded in space
+(O'Sullivan, 2014). A street network is an example of a complex spatial
+networkwith both nodes and edges embedded in space, as are railways,
+power grids, and water and sewage networks (Barthélemy, 2011).
+
+street networks are approximately planar
+
+Average street length
+
+Node density
+
+The eccentricity of a node is the maximum of the shortest-path
+weighted distances between it and each other node in the network
+
+The diameter of a network is the maximum eccentricity of any
+node in the network and the radius of a network is theminimumeccentricity
+of any node in the network. The center of a network is the node or
+set of nodes whose eccentricity equals the radius and the periphery of a
+network is the node or set of nodeswhose eccentricity equals the diameter
+
+node degree
+
+clustering coefficient
+
+The maximum betweenness
+centrality in a network specifies the proportion of shortest paths that
+pass through themost important node/edge. This is an indicator of resilience:
+networkswith a highmaximumbetweenness centrality aremore
+prone to failure or inefficiency should this single choke point fail.
+
+Closeness centrality represents, for each node, the reciprocal of the
+sum of the distance from this node to all others in the network: that
+is, nodes rank as more central if they are on average closer to all other
+nodes. 
+
+Finally, PageRank – the algorithm Google uses to rank web
+pages – is a variant of network centrality, namely eigenvector centrality
+(Brin & Page, 1998). PageRank ranks nodes based on the structure of incoming
+links and the rank of the source node, andmay also be applied to
+street networks (Agryzkov, Oliver, Tortosa, & Vicent, 2012; Chin &Wen,
+2015)
+
+OpenStreetMap – a collaborative mapping project that provides a
+free and publicly editable map of the world – has emerged in recent
+years as a major player both for mapping and for acquiring spatial
+data (Corcoran, Mooney, & Bertolotto, 2013; Jokar Arsanjani, Zipf,
+Mooney, & Helbich, 2015). Inspired by Wikipedia's mass-collaboration
+model, the project started in 2004 and has grown to over two million
+users today. Its data quality is generally quite high (Barron, Neis, &
+Zipf, 2014; Girres & Touya, 2010; Haklay, 2010) and although data
+coverage varies worldwide, it is generally good when compared to corresponding
+estimates from the CIA World Factbook (Maron, 2015)
+
+A city’s development eras, design paradigms, underlying terrain, culture, and local
+economic conditions influence the pattern, topology, and grain of its street networks
+(Jackson 1985; Kostof 1991). These networks in turn structure the human
+interactions and transportation processes that run along them, forming an
+important pillar of city planners’ quest for spatial order (Rose-Redwood and
+Bigon 2018). In particular, network orientation and geometry have played an outsized
+role in urban planning since its earliest days (Smith 2007).
+Measuring these network patterns can help researchers, planners, and community
+members understand local histories of urban design, transportation planning, and
+morphology; evaluate existing transportation system patterns and configurations; and
+explore new infrastructure proposals and alternatives. It also furthers the science of cities
+by providing a better understanding of urban patterns and how they correspond to
+evolutionary mechanisms, planning, and design.
+
+
+```{r}
+library(sfnetworks)
+library(sf)
+library(tidygraph)
+library(tidyverse)
+library(igraph)
+```
+
+```{r}
+p1 = st_point(c(7, 51))
+p2 = st_point(c(7, 52))
+p3 = st_point(c(8, 52))
+p4 = st_point(c(8, 51.5))
+
+l1 = st_sfc(st_linestring(c(p1, p2)))
+l2 = st_sfc(st_linestring(c(p1, p4, p3)))
+l3 = st_sfc(st_linestring(c(p3, p2)))
+
+edges = st_as_sf(c(l1, l2, l3), crs = 4326)
+nodes = st_as_sf(c(st_sfc(p1), st_sfc(p2), st_sfc(p3)), crs = 4326)
+
+edges$from = c(1, 1, 3)
+edges$to = c(2, 3, 2)
+
+net = sfnetwork(nodes, edges)
+#> Checking if spatial network structure is valid...
+#> Spatial network structure is valid
+net
+```
+
+```{r}
+nodes$name = c("city", "village", "farm")
+edges$from = c("city", "city", "farm")
+edges$to = c("village", "farm", "village")
+
+edges
+
+net = sfnetwork(nodes, edges, node_key = "name")
+```
+
+```{r}
+st_geometry(edges) = NULL
+
+other_net = sfnetwork(nodes, edges, edges_as_lines = TRUE)
+
+plot(net, cex = 2, lwd = 2, main = "Original geometries")
+plot(other_net, cex = 2, lwd = 2, main = "Straight lines")
+
+```
+
+```{r}
+
+roxel
+
+net = as_sfnetwork(roxel)
+plot(net)
+
+autoplot(net) + ggtitle("Road network of Münster Roxel")
+```
+
+```{r}
+net = net %>%
+  activate("nodes") %>%
+  mutate(bc = centrality_betweenness())
+#> Warning in betweenness(graph = graph, v = V(graph), directed = directed, :
+#> 'nobigint' is deprecated since igraph 1.3 and will be removed in igraph 1.4
+
+ggplot() +
+  geom_sf(data = st_as_sf(net, "edges"), col = "grey50") +
+  geom_sf(data = st_as_sf(net, "nodes"), aes(col = bc), size = 3) + #, size = bc
+  ggtitle("Betweenness centrality in Münster Roxel")
+```

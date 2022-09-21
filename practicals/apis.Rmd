@@ -248,6 +248,8 @@ to the *spatial data* option.
 -   The city of Toronto offers an `R` [package](https://sharlagelfand.github.io/opendatatoronto/) 
 to access [City of Toronto Open Data Portal](https://open.toronto.ca/).
 
+-   See a relevant book by @apis available [here](https://bookdown.org/paul/apis_for_social_scientists/).
+
 ```{block, type='alert alert-warning'}
 **Another task:** On your own time, play with these packages and access some of the 
 (urban) data they offer.

@@ -365,7 +365,7 @@ Based on @batty2013new. See also @bettencourt2021introduction
 
 ## Zipf law
 
-quatro
+![](images/zipf_uk.png)
 
 ## Zipf law
 
@@ -381,6 +381,8 @@ quatro
 :::
 
 ::: {.column width="40%"}
+Rank size rule
+
 $pop_i = pop_d r_i^{-a}$
 
 if $a=1$: Zipf law
@@ -397,6 +399,8 @@ $pop_i = pop_d / r_i$
 :::
 
 ::: {.column width="40%"}
+Rank size rule
+
 $pop_i = pop_d r_i^{-a}$
 
 if $a=1$: Zipf law
@@ -415,9 +419,116 @@ $pop_i = pop_d / r_i$
 
 -   Statistical regularity or an underpinning micro-economic process?
 
+## Bettencourt-West or Marshall's law
+
+-   As cities grow...
+
+-   ... their average real income (and wealth) increases more than proportionately [@bettencourt2007growth]
+
+$Y_i = Y_0P_i^\beta$
+
+-   $Y_i$: material resources (energy or infrastructure) or social activity (wealth, patents, and pollution) in city $i$
+
+-   $Y_o$: normalization constant
+
+-   $P_i$: population of city i
+
+-   $\beta$: exponent
+
+## Bettencourt-West or Marshall's law
+
+::: columns
+::: {.column width="60%"}
+![](images/bettencourt.png){width="70%"}
+
+<small>Source: @bettencourt2007growth </small>
+:::
+
+::: {.column width="40%"}
+-   Not surprisingly another straight line
+
+-   Another power law
+:::
+:::
+
+## Bettencourt-West or Marshall's law
+
+![](images/power_table.png)
+
+<small>Source: @bettencourt2007growth </small>
+
+## Bettencourt-West or Marshall's law
+
+::: columns
+::: {.column width="80%"}
+![](images/lisbon.png){width="70%"}
+:::
+
+::: {.column width="20%"}
+<small> An average urban dweller in the capital, Lisbon, has approximately twice as many reciprocated mobile phone contacts, k, as an average individual in the rural town of Lixa.
+
+<small>Source: @bettencourt2021introduction </small> </small>
+:::
+:::
+
+## Bettencourt-West or Marshall's law
+
+::: columns
+::: {.column width="70%"}
+![](images/power_et.png){width="70%"}
+:::
+
+::: {.column width="30%"}
+<small>
+
+-   $Y=3P^b$
+
+-   300 random observation
+
+-   Plotting the results
+
+-   Economies of scale
+
+-   $b<1$ decreasing returns to scale
+
+-   $b=1$ constant returns
+
+-   $b>1$ increasing returns
+
+-   SF networks, economies of scale?
+
+</small>
+:::
+:::
+
+------------------------------------------------------------------------
+
+![](images/scale_economies.png){width="50%"}
+
+------------------------------------------------------------------------
+
+```{=html}
+<style>
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+</style>
+```
+
+::: container
+::: center
+   <big>Revisit economies of scale</big>
+:::
+:::
 
 ## Epilogue
 
-Cities, of course, do not really have their own dynamics; they depend on decisions made by people, corporations, governments, and others. The aggregate statistics of all their decisions will therefore emerge as key and provide another con- nection to the uses of information in urban science. @bettencourt2021introduction
+> Cities, of course, do not really have their own dynamics; they depend on decisions made by people, corporations, governments, and others. The aggregate statistics of all their decisions will therefore emerge as key and provide another con- nection to the uses of information in urban science. @bettencourt2021introduction
 
 ## References

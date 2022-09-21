@@ -362,8 +362,8 @@ University of Bristol, Alan Turing Institute<br>
 <h2>Regular graphs</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-4674a9748fae3638e1c8" style="width:960px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4674a9748fae3638e1c8">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = circo,\n      rankdir = RL]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange];\nnodesep=4\nA; B; C; D; E; F; G; H;\n\n# an edge statement\nedge [color = grey]\n\nA -- B\nB -- C\nC -- D\nD -- E\nE -- F\nF -- G\nG -- H\nH -- A\nA -- D\nH -- E\nB -- G\nC -- F\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4cdacce256435c16f488" style="width:960px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4cdacce256435c16f488">{"x":{"diagram":"\ngraph {\n\n# a graph statement\ngraph [layout = circo,\n      rankdir = RL]\n\n# a node statement\nnode [shape = circle,\n      style = filled,\n      color = grey,\n      fillcolor = orange];\nnodesep=4\nA; B; C; D; E; F; G; H;\n\n# an edge statement\nedge [color = grey]\n\nA -- B\nB -- C\nC -- D\nD -- E\nE -- F\nF -- G\nG -- H\nH -- A\nA -- D\nH -- E\nB -- G\nC -- F\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -615,8 +615,8 @@ University of Bristol, Alan Turing Institute<br>
 </section>
 <section id="zipf-law-1" class="slide level2">
 <h2>Zipf law</h2>
-<p>quatro</p>
-</section>
+
+<img data-src="images/zipf_uk.png" class="r-stretch"></section>
 <section id="zipf-law-2" class="slide level2">
 <h2>Zipf law</h2>
 
@@ -628,7 +628,8 @@ University of Bristol, Alan Turing Institute<br>
 <p><img data-src="images/us_cities.png" style="width:70.0%"></p>
 <p><small><small>Source: <span class="citation" data-cites="o2012urban">O’sullivan (<a href="#/ref-o2012urban" role="doc-biblioref" onclick="return false;">2012</a>)</span> </small></small></p>
 </div><div class="column" style="width:40%;">
-<p><span class="math inline">\(pop_i = pop_d * r_i^{-a}\)</span></p>
+<p>Rank size rule</p>
+<p><span class="math inline">\(pop_i = pop_d r_i^{-a}\)</span></p>
 <p>if <span class="math inline">\(a=1\)</span>: Zipf law</p>
 <p><span class="math inline">\(pop_i = pop_d / r_i\)</span></p>
 </div>
@@ -640,15 +641,115 @@ University of Bristol, Alan Turing Institute<br>
 <div class="column" style="width:60%;">
 <p><img data-src="images/uk_cities.png" style="width:70.0%"></p>
 </div><div class="column" style="width:40%;">
-<p><span class="math inline">\(pop_i = pop_d * r_i^{-a}\)</span></p>
+<p>Rank size rule</p>
+<p><span class="math inline">\(pop_i = pop_d r_i^{-a}\)</span></p>
 <p>if <span class="math inline">\(a=1\)</span>: Zipf law</p>
 <p><span class="math inline">\(pop_i = pop_d / r_i\)</span></p>
 </div>
 </div>
 </section>
+<section id="zipf-law-5" class="slide level2">
+<h2>Zipf law</h2>
+<ul>
+<li><p>Primary cities above what a Zipf law would predict</p></li>
+<li><p>Newly industrialised countries</p></li>
+<li><p>No overall consensus why the rank-size rule holds</p></li>
+<li><p>Statistical regularity or an underpinning micro-economic process?</p></li>
+</ul>
+</section>
+<section id="bettencourt-west-or-marshalls-law" class="slide level2">
+<h2>Bettencourt-West or Marshall’s law</h2>
+<ul>
+<li><p>As cities grow…</p></li>
+<li><p>… their average real income (and wealth) increases more than proportionately <span class="citation" data-cites="bettencourt2007growth">(<a href="#/ref-bettencourt2007growth" role="doc-biblioref" onclick="return false;">Bettencourt et al. 2007</a>)</span></p></li>
+</ul>
+<p><span class="math inline">\(Y_i = Y_0P_i^\beta\)</span></p>
+<ul>
+<li><p><span class="math inline">\(Y_i\)</span>: material resources (energy or infrastructure) or social activity (wealth, patents, and pollution) in city <span class="math inline">\(i\)</span></p></li>
+<li><p><span class="math inline">\(Y_o\)</span>: normalization constant</p></li>
+<li><p><span class="math inline">\(P_i\)</span>: population of city i</p></li>
+<li><p><span class="math inline">\(\beta\)</span>: exponent</p></li>
+</ul>
+</section>
+<section id="bettencourt-west-or-marshalls-law-1" class="slide level2">
+<h2>Bettencourt-West or Marshall’s law</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><img data-src="images/bettencourt.png" style="width:70.0%"></p>
+<p><small>Source: <span class="citation" data-cites="bettencourt2007growth">Bettencourt et al. (<a href="#/ref-bettencourt2007growth" role="doc-biblioref" onclick="return false;">2007</a>)</span> </small></p>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p>Not surprisingly another straight line</p></li>
+<li><p>Another power law</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="bettencourt-west-or-marshalls-law-2" class="slide level2">
+<h2>Bettencourt-West or Marshall’s law</h2>
+
+<img data-src="images/power_table.png" class="r-stretch"><p><small>Source: <span class="citation" data-cites="bettencourt2007growth">Bettencourt et al. (<a href="#/ref-bettencourt2007growth" role="doc-biblioref" onclick="return false;">2007</a>)</span> </small></p>
+</section>
+<section id="bettencourt-west-or-marshalls-law-3" class="slide level2">
+<h2>Bettencourt-West or Marshall’s law</h2>
+<div class="columns">
+<div class="column" style="width:80%;">
+<p><img data-src="images/lisbon.png" style="width:70.0%"></p>
+</div><div class="column" style="width:20%;">
+<p><small> An average urban dweller in the capital, Lisbon, has approximately twice as many reciprocated mobile phone contacts, k, as an average individual in the rural town of Lixa.</small></p><small>
+</small><p><small><small>Source: <span class="citation" data-cites="bettencourt2021introduction">Bettencourt (<a href="#/ref-bettencourt2021introduction" role="doc-biblioref" onclick="return false;">2021</a>)</span> </small> </small></p>
+</div>
+</div>
+</section>
+<section id="bettencourt-west-or-marshalls-law-4" class="slide level2">
+<h2>Bettencourt-West or Marshall’s law</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p><img data-src="images/power_et.png" style="width:70.0%"></p>
+</div><div class="column" style="width:30%;">
+<p><small></small></p><small>
+<ul>
+<li><p><span class="math inline">\(Y=3P^b\)</span></p></li>
+<li><p>300 random observation</p></li>
+<li><p>Plotting the results</p></li>
+<li><p>Economies of scale</p></li>
+<li><p><span class="math inline">\(b&lt;1\)</span> decreasing returns to scale</p></li>
+<li><p><span class="math inline">\(b=1\)</span> constant returns</p></li>
+<li><p><span class="math inline">\(b&gt;1\)</span> increasing returns</p></li>
+<li><p>SF networks, economies of scale?</p></li>
+</ul>
+</small><p><small></small></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="images/scale_economies.png" style="width:50.0%" class="r-stretch"></section>
+<section class="slide level2">
+
+<style>
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+</style>
+<div class="container">
+<div class="center">
+<p><big>Revisit economies of scale</big></p>
+</div>
+</div>
+</section>
 <section id="epilogue" class="slide level2">
 <h2>Epilogue</h2>
+<blockquote>
 <p>Cities, of course, do not really have their own dynamics; they depend on decisions made by people, corporations, governments, and others. The aggregate statistics of all their decisions will therefore emerge as key and provide another con- nection to the uses of information in urban science. <span class="citation" data-cites="bettencourt2021introduction">Bettencourt (<a href="#/ref-bettencourt2021introduction" role="doc-biblioref" onclick="return false;">2021</a>)</span></p>
+</blockquote>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -667,6 +768,9 @@ Batty, Michael. 2013. <em>The New Science of Cities</em>. MIT press.
 </div>
 <div id="ref-bettencourt2021introduction" class="csl-entry" role="doc-biblioentry">
 Bettencourt, Luı́s MA. 2021. <span>“Introduction to Urban Science: Evidence and Theory of Cities as Complex Systems.”</span>
+</div>
+<div id="ref-bettencourt2007growth" class="csl-entry" role="doc-biblioentry">
+Bettencourt, Luı́s MA, José Lobo, Dirk Helbing, Christian Kühnert, and Geoffrey B West. 2007. <span>“Growth, Innovation, Scaling, and the Pace of Life in Cities.”</span> <em>Proceedings of the National Academy of Sciences</em> 104 (17): 7301–6.
 </div>
 <div id="ref-coe2019economic" class="csl-entry" role="doc-biblioentry">
 Coe, Neil M, Philip F Kelly, and Henry WC Yeung. 2019. <em>Economic Geography: A Contemporary Introduction</em>. John Wiley &amp; Sons.
